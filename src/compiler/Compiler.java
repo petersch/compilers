@@ -33,15 +33,17 @@ public class Compiler {
         }
 
         CompilerVisitor eval = new CompilerVisitor(tokens);
-        CodeFragment code ;
         try {
-            code = eval.visit(tree);
+            CodeFragment code = eval.visit(tree);
             if (!eval.failed) System.out.print(code.toString());
         }
         catch (Exception e) {
             System.err.print(e.getMessage());
         }
-        if (eval.failed) System.err.print(eval.errorStr);
-        if (eval.failed) System.err.print(String.format("compiler failed with %d errors", eval.errcount));
+        if (eval.failed) {
+            System.err.print(eval.errorStr);
+            System.err.print(String.format("compiler failed with %d errors", eval.errcount));
+            Runtime.getRuntime().exit(-1);
+        }
     }
 }
