@@ -121,7 +121,7 @@ public class CompilerVisitor extends jazzikBaseVisitor<CodeFragment> {
     }
     
     @Override
-    public CodeFragment visitFuncDef(jazzikParser.FuncDefContext ctx) {
+    public CodeFragment visitFuncExtern(jazzikParser.FuncExternContext ctx) {
         startScope();
         registerFunction(ctx.type.getType(), ctx.name.getText());
         
@@ -129,7 +129,37 @@ public class CompilerVisitor extends jazzikBaseVisitor<CodeFragment> {
         String type = "TYPE";
         switch (ctx.type.getType()) {
             case jazzikParser.INT_TYPE: type = "i32"; break;
-            case jazzikParser.BOOL_TYPE: type = "i1"; break;
+            case jazzikParser.BOOL_TYPE: type = "i32"; break;
+            case jazzikParser.VOID_TYPE: type = "void"; break;
+        }
+        
+        ST template = new ST(
+            "declare <type> @<name>(<args>)\n\n"
+        );
+        
+        template.add("type", type);
+        template.add("name", name);
+        if (ctx.args != null)
+            template.add("args", visit(ctx.args).getFuncArgs());
+        else
+            template.add("args", "");
+        
+        CodeFragment code = new CodeFragment();
+        code.addCode(template.render());
+        endScope();
+        return code;
+    }
+    
+    @Override
+    public CodeFragment visitFuncDef(jazzikParser.FuncDefContext ctx) {
+        startScope();
+        registerFunction(jazzikParser.INT_TYPE, ctx.name.getText());
+        
+        String name = ctx.name.getText();
+        String type = "TYPE";
+        switch (ctx.type.getType()) {
+            case jazzikParser.INT_TYPE: type = "i32"; break;
+            case jazzikParser.BOOL_TYPE: type = "i32"; break;
             case jazzikParser.VOID_TYPE: type = "i32"; break;
         }
         
@@ -188,8 +218,8 @@ public class CompilerVisitor extends jazzikBaseVisitor<CodeFragment> {
         String register = generateNewRegister();
         switch (functions.get(name).type) {
             case jazzikParser.INT_TYPE: type = "i32"; break;
-            case jazzikParser.BOOL_TYPE: type = "i1"; break;
-            case jazzikParser.VOID_TYPE: type = "i32"; break;
+            case jazzikParser.BOOL_TYPE: type = "i32"; break;
+            case jazzikParser.VOID_TYPE: type = "void"; break;
         }
         
         CodeFragment code = new CodeFragment();
@@ -198,9 +228,12 @@ public class CompilerVisitor extends jazzikBaseVisitor<CodeFragment> {
         code.addCode(args);
             
         ST template = new ST(
-            "  <register> = call <type> @<name>(<args>)\n"
+            "  <register>call <type> @<name>(<args>)\n"
         );
-        template.add("register", register);
+        if (functions.get(name).type == jazzikParser.VOID_TYPE)
+            template.add("register", "");
+        else
+            template.add("register", register + " = ");
         template.add("type", type);
         template.add("name", name);
         template.add("args", args.getFuncArgs());
@@ -418,25 +451,6 @@ public class CompilerVisitor extends jazzikBaseVisitor<CodeFragment> {
      * Integer operators
      * 
      */
-    
-    /*@Override
-    public CodeFragment visitInc(jazzikParser.IncContext ctx) {
-        CodeFragment code = new CodeFragment();
-        String name = ctx.ID().getText();
-        String register = generateNewRegister();
-        switch (ctx.op.getType()) {
-            case jazzikParser.INC:
-                ST template = new ST(
-                    "  "
-                );
-            case jazzikParser.DEC:
-                code.addCode(expr);
-                code.addCode(String.format("  %s = sub i32 0, %s", register, expr.getRegister()));
-                code.setRegister(register);
-                return code;
-        }
-        return null;
-    }*/
     
     @Override
     public CodeFragment visitUna(jazzikParser.UnaContext ctx) {
@@ -761,21 +775,6 @@ public class CompilerVisitor extends jazzikBaseVisitor<CodeFragment> {
         code.addCode(template.render());
         return code;
     }
-    
-    /*@Override 
-    public CodeFragment visitWriteBool(jazzikParser.WriteBoolContext ctx) {
-        CodeFragment code = new CodeFragment();
-        CodeFragment cond = visit(ctx.cond());
-        ST template = new ST(
-            "  <tmp> = zext i1 <register> to i32" +
-            "  call void @write_bool(i32 <tmp>)\n"
-        );
-        template.add("register", cond.getRegister());
-        template.add("tmp", generateNewRegister());
-        code.addCode(cond);
-        code.addCode(template.render());
-        return code;
-    }*/
     
     @Override
     public CodeFragment visitWriteStr(jazzikParser.WriteStrContext ctx) {
