@@ -123,7 +123,6 @@ public class CompilerVisitor extends jazzikBaseVisitor<CodeFragment> {
     @Override
     public CodeFragment visitFuncDef(jazzikParser.FuncDefContext ctx) {
         startScope();
-System.out.println("Funcdef on line " + ctx.getStart().getLine());
         registerFunction(ctx.type.getType(), ctx.name.getText());
         
         String name = ctx.name.getText();
