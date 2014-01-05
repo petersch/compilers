@@ -66,11 +66,18 @@ public class CompilerVisitor extends jazzikBaseVisitor<CodeFragment> {
         vars.pop();
     }
     
-    private String registerVariable(int type, String name) {
+    private String registerVariable(ParserRuleContext ctx, int type, String name) {
+        if (vars.peek().containsKey(name)) {
+            addError(ctx, ctx.getText(), String.format(
+                    "variable %s already declared in the same scope",
+                    name
+            ));
+        }
         String register = generateNewRegister();
         //variables.put(name, new VarEntry(type, name, register));
         vars.peek().put(name, new VarEntry(type, name, register));
         return register;
+        
     }
     
     private VarEntry getVariable(ParserRuleContext ctx, String name) {
@@ -106,7 +113,13 @@ public class CompilerVisitor extends jazzikBaseVisitor<CodeFragment> {
         }
     }
     
-    private void registerFunction(int type, String name, String signature) {
+    private void registerFunction(ParserRuleContext ctx, int type, String name, String signature) {
+        if (functions.containsKey(name)) {
+            addError(ctx, ctx.getText(), String.format(
+                    "function %s already declared",
+                    name
+            ));
+        }
         functions.put(name, new FuncEntry(type, name, signature));
     }
     
@@ -193,7 +206,7 @@ public class CompilerVisitor extends jazzikBaseVisitor<CodeFragment> {
         else {
             template.add("args", "");
         }
-        registerFunction(ctx.type.getType(), ctx.name.getText(), args.getSignature());
+        registerFunction(ctx, ctx.type.getType(), ctx.name.getText(), args.getSignature());
         
         CodeFragment code = new CodeFragment();
         code.addCode(template.render());
@@ -235,7 +248,7 @@ public class CompilerVisitor extends jazzikBaseVisitor<CodeFragment> {
             template.add("args", "");
             template.add("arg_vars", "");
         }
-        registerFunction(jazzikParser.INT_TYPE, ctx.name.getText(), args.getSignature());
+        registerFunction(ctx, jazzikParser.INT_TYPE, ctx.name.getText(), args.getSignature());
         
         CodeFragment body = visit(ctx.block());
         template.add("body_code", body.getCode());
@@ -253,14 +266,14 @@ public class CompilerVisitor extends jazzikBaseVisitor<CodeFragment> {
         String name = ctx.name.getText();
         if (ctx.type.getType() == jazzikParser.INT_TYPE
                 || ctx.type.getType() == jazzikParser.BOOL_TYPE) {
-            String register = registerVariable(ctx.type.getType(), ctx.name.getText());
+            String register = registerVariable(ctx, ctx.type.getType(), ctx.name.getText());
             code.addFuncArg("i32 %" + name);
             code.addSignature("int");
             code.addCode(String.format("  %s = alloca i32\n", register));
             code.addCode(String.format("  store i32 %%%s, i32* %s\n", name, register));
         }
         if (ctx.type.getType() == jazzikParser.ARRAY_TYPE) {
-            String register = registerVariable(ctx.type.getType(), ctx.name.getText());
+            String register = registerVariable(ctx, ctx.type.getType(), ctx.name.getText());
             code.addFuncArg("i32* " + register);
             code.addSignature("int[]");
         }
@@ -369,7 +382,7 @@ public class CompilerVisitor extends jazzikBaseVisitor<CodeFragment> {
                 "  <register> = alloca i32\n" +
                 "  store i32 0, i32* <register>\n"
             );
-            String register = registerVariable(jazzikParser.INT_TYPE, ctx.name.getText());
+            String register = registerVariable(ctx, jazzikParser.INT_TYPE, ctx.name.getText());
             template.add("register", register);
             code.addCode(template.render());
         }
@@ -379,7 +392,7 @@ public class CompilerVisitor extends jazzikBaseVisitor<CodeFragment> {
                 "  <register> = alloca i32\n" +
                 "  store i32 <expr_register>, i32* <register>\n"
             );
-            String register = registerVariable(jazzikParser.INT_TYPE, ctx.name.getText());
+            String register = registerVariable(ctx, jazzikParser.INT_TYPE, ctx.name.getText());
             template.add("register", register);
             template.add("expr_register", expr.getRegister());
             code.addCode(expr);
@@ -400,7 +413,7 @@ public class CompilerVisitor extends jazzikBaseVisitor<CodeFragment> {
         );
         
         template.add("shifted", generateNewRegister());
-        String register = registerVariable(jazzikParser.ARRAY_TYPE, ctx.name.getText());
+        String register = registerVariable(ctx, jazzikParser.ARRAY_TYPE, ctx.name.getText());
         template.add("register", register);
         template.add("length", expr.getRegister());
         code.addCode(expr);
@@ -743,7 +756,7 @@ public class CompilerVisitor extends jazzikBaseVisitor<CodeFragment> {
         CodeFragment start = visit(ctx.expression(0));
         CodeFragment end = visit(ctx.expression(1));
         
-        String register = registerVariable(jazzikParser.INT_TYPE, ctx.ID().getText());
+        String register = registerVariable(ctx, jazzikParser.INT_TYPE, ctx.ID().getText());
         CodeFragment body = visit(ctx.block());
         
         String operator = "OPERATOR";
@@ -800,7 +813,7 @@ public class CompilerVisitor extends jazzikBaseVisitor<CodeFragment> {
     public CodeFragment visitForEach(jazzikParser.ForEachContext ctx) {
         startScope();
         
-        String register = registerVariable(jazzikParser.INT_TYPE, ctx.ID(0).getText());
+        String register = registerVariable(ctx, jazzikParser.INT_TYPE, ctx.ID(0).getText());
         VarEntry iter = getVariable(ctx, ctx.ID(0).getText());
         VarEntry array = getVariable(ctx, ctx.ID(1).getText());
         assertArrayType(ctx, array);
