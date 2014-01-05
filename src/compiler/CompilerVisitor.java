@@ -45,6 +45,8 @@ public class CompilerVisitor extends jazzikBaseVisitor<CodeFragment> {
     
     private void clearScope() {
         vars.clear();
+        labelIndex = 0;
+        registerIndex = 0;
     }
     
     private void startScope() {
@@ -122,6 +124,7 @@ public class CompilerVisitor extends jazzikBaseVisitor<CodeFragment> {
     
     @Override
     public CodeFragment visitFuncExtern(jazzikParser.FuncExternContext ctx) {
+        clearScope();
         startScope();
         registerFunction(ctx.type.getType(), ctx.name.getText());
         
@@ -152,6 +155,7 @@ public class CompilerVisitor extends jazzikBaseVisitor<CodeFragment> {
     
     @Override
     public CodeFragment visitFuncDef(jazzikParser.FuncDefContext ctx) {
+        clearScope();
         startScope();
         registerFunction(jazzikParser.INT_TYPE, ctx.name.getText());
         
@@ -198,7 +202,8 @@ public class CompilerVisitor extends jazzikBaseVisitor<CodeFragment> {
     public CodeFragment visitFuncArgDecl(jazzikParser.FuncArgDeclContext ctx) {
         CodeFragment code = new CodeFragment();
         String name = ctx.name.getText();
-        if (ctx.type.getType() == jazzikParser.INT_TYPE) {
+        if (ctx.type.getType() == jazzikParser.INT_TYPE
+                || ctx.type.getType() == jazzikParser.BOOL_TYPE) {
             String register = registerVariable(ctx.type.getType(), ctx.name.getText());
             code.addFuncArg("i32 %" + name);
             code.addCode(String.format("  %s = alloca i32\n", register));
