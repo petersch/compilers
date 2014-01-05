@@ -1,3 +1,4 @@
+OLD=`pwd`
 FILE=`readlink -f $0`
 DIR=`dirname "$FILE"`
 cd $DIR
@@ -13,3 +14,4 @@ javac `find src/ -name \*.java` -d build/classes/
 
 gcc -m32 -fPIC -std=c99 -shared include/helper.c -o include/helper.so
 
+cd $OLD
