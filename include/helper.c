@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 
 void write_int(int i) {
 	printf("%d", i);
@@ -20,5 +21,13 @@ void write_nl() {
 
 void read_int(int* i) {
 	scanf("%d", i);
+}
+
+void seed() {
+	srand(time(NULL));
+}
+
+int rnd() {
+	return rand();
 }
 
