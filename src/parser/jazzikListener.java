@@ -163,6 +163,17 @@ public interface jazzikListener extends ParseTreeListener {
 	void exitFuncArgExpr(@NotNull jazzikParser.FuncArgExprContext ctx);
 
 	/**
+	 * Enter a parse tree produced by {@link jazzikParser#ForEach}.
+	 * @param ctx the parse tree
+	 */
+	void enterForEach(@NotNull jazzikParser.ForEachContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link jazzikParser#ForEach}.
+	 * @param ctx the parse tree
+	 */
+	void exitForEach(@NotNull jazzikParser.ForEachContext ctx);
+
+	/**
 	 * Enter a parse tree produced by {@link jazzikParser#init}.
 	 * @param ctx the parse tree
 	 */
@@ -218,6 +229,17 @@ public interface jazzikListener extends ParseTreeListener {
 	void exitCmp(@NotNull jazzikParser.CmpContext ctx);
 
 	/**
+	 * Enter a parse tree produced by {@link jazzikParser#ContinueError}.
+	 * @param ctx the parse tree
+	 */
+	void enterContinueError(@NotNull jazzikParser.ContinueErrorContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link jazzikParser#ContinueError}.
+	 * @param ctx the parse tree
+	 */
+	void exitContinueError(@NotNull jazzikParser.ContinueErrorContext ctx);
+
+	/**
 	 * Enter a parse tree produced by {@link jazzikParser#Read}.
 	 * @param ctx the parse tree
 	 */
@@ -249,17 +271,6 @@ public interface jazzikListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitFuncdecls(@NotNull jazzikParser.FuncdeclsContext ctx);
-
-	/**
-	 * Enter a parse tree produced by {@link jazzikParser#BoolDecl}.
-	 * @param ctx the parse tree
-	 */
-	void enterBoolDecl(@NotNull jazzikParser.BoolDeclContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link jazzikParser#BoolDecl}.
-	 * @param ctx the parse tree
-	 */
-	void exitBoolDecl(@NotNull jazzikParser.BoolDeclContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link jazzikParser#ReadArray}.
@@ -339,15 +350,15 @@ public interface jazzikListener extends ParseTreeListener {
 	void exitFuncArgDecls(@NotNull jazzikParser.FuncArgDeclsContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link jazzikParser#cond}.
+	 * Enter a parse tree produced by {@link jazzikParser#ErrorBreak}.
 	 * @param ctx the parse tree
 	 */
-	void enterCond(@NotNull jazzikParser.CondContext ctx);
+	void enterErrorBreak(@NotNull jazzikParser.ErrorBreakContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link jazzikParser#cond}.
+	 * Exit a parse tree produced by {@link jazzikParser#ErrorBreak}.
 	 * @param ctx the parse tree
 	 */
-	void exitCond(@NotNull jazzikParser.CondContext ctx);
+	void exitErrorBreak(@NotNull jazzikParser.ErrorBreakContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link jazzikParser#IntDecl}.
@@ -370,17 +381,6 @@ public interface jazzikListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitWriteStr(@NotNull jazzikParser.WriteStrContext ctx);
-
-	/**
-	 * Enter a parse tree produced by {@link jazzikParser#FuncArgCond}.
-	 * @param ctx the parse tree
-	 */
-	void enterFuncArgCond(@NotNull jazzikParser.FuncArgCondContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link jazzikParser#FuncArgCond}.
-	 * @param ctx the parse tree
-	 */
-	void exitFuncArgCond(@NotNull jazzikParser.FuncArgCondContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link jazzikParser#Log}.
@@ -471,15 +471,15 @@ public interface jazzikListener extends ParseTreeListener {
 	void exitFuncCall(@NotNull jazzikParser.FuncCallContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link jazzikParser#Inc}.
+	 * Enter a parse tree produced by {@link jazzikParser#Vars}.
 	 * @param ctx the parse tree
 	 */
-	void enterInc(@NotNull jazzikParser.IncContext ctx);
+	void enterVars(@NotNull jazzikParser.VarsContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link jazzikParser#Inc}.
+	 * Exit a parse tree produced by {@link jazzikParser#Vars}.
 	 * @param ctx the parse tree
 	 */
-	void exitInc(@NotNull jazzikParser.IncContext ctx);
+	void exitVars(@NotNull jazzikParser.VarsContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link jazzikParser#Par}.
@@ -491,17 +491,6 @@ public interface jazzikListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitPar(@NotNull jazzikParser.ParContext ctx);
-
-	/**
-	 * Enter a parse tree produced by {@link jazzikParser#Vars}.
-	 * @param ctx the parse tree
-	 */
-	void enterVars(@NotNull jazzikParser.VarsContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link jazzikParser#Vars}.
-	 * @param ctx the parse tree
-	 */
-	void exitVars(@NotNull jazzikParser.VarsContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link jazzikParser#FuncArgID}.

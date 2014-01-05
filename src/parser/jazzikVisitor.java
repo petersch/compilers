@@ -110,6 +110,13 @@ public interface jazzikVisitor<T> extends ParseTreeVisitor<T> {
 	T visitFuncArgExpr(@NotNull jazzikParser.FuncArgExprContext ctx);
 
 	/**
+	 * Visit a parse tree produced by {@link jazzikParser#ForEach}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitForEach(@NotNull jazzikParser.ForEachContext ctx);
+
+	/**
 	 * Visit a parse tree produced by {@link jazzikParser#init}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -145,6 +152,13 @@ public interface jazzikVisitor<T> extends ParseTreeVisitor<T> {
 	T visitCmp(@NotNull jazzikParser.CmpContext ctx);
 
 	/**
+	 * Visit a parse tree produced by {@link jazzikParser#ContinueError}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitContinueError(@NotNull jazzikParser.ContinueErrorContext ctx);
+
+	/**
 	 * Visit a parse tree produced by {@link jazzikParser#Read}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -164,13 +178,6 @@ public interface jazzikVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitFuncdecls(@NotNull jazzikParser.FuncdeclsContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link jazzikParser#BoolDecl}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitBoolDecl(@NotNull jazzikParser.BoolDeclContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link jazzikParser#ReadArray}.
@@ -222,11 +229,11 @@ public interface jazzikVisitor<T> extends ParseTreeVisitor<T> {
 	T visitFuncArgDecls(@NotNull jazzikParser.FuncArgDeclsContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link jazzikParser#cond}.
+	 * Visit a parse tree produced by {@link jazzikParser#ErrorBreak}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitCond(@NotNull jazzikParser.CondContext ctx);
+	T visitErrorBreak(@NotNull jazzikParser.ErrorBreakContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link jazzikParser#IntDecl}.
@@ -241,13 +248,6 @@ public interface jazzikVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitWriteStr(@NotNull jazzikParser.WriteStrContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link jazzikParser#FuncArgCond}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitFuncArgCond(@NotNull jazzikParser.FuncArgCondContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link jazzikParser#Log}.
@@ -306,11 +306,11 @@ public interface jazzikVisitor<T> extends ParseTreeVisitor<T> {
 	T visitFuncCall(@NotNull jazzikParser.FuncCallContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link jazzikParser#Inc}.
+	 * Visit a parse tree produced by {@link jazzikParser#Vars}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitInc(@NotNull jazzikParser.IncContext ctx);
+	T visitVars(@NotNull jazzikParser.VarsContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link jazzikParser#Par}.
@@ -318,13 +318,6 @@ public interface jazzikVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitPar(@NotNull jazzikParser.ParContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link jazzikParser#Vars}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitVars(@NotNull jazzikParser.VarsContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link jazzikParser#FuncArgID}.

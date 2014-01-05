@@ -49,21 +49,21 @@ public class jazzikLexer extends Lexer {
 
 
 	    public boolean failed = false;
-			public int errcount = 0;
+	        public int errcount = 0;
 
 	    @Override
 	    public void recover(RecognitionException e) {
 	        failed = true;
-					++errcount;
-					super.recover(e);
-		  }
+	                ++errcount;
+	                super.recover(e);
+	      }
 
-			@Override
+	        @Override
 	    public void recover(LexerNoViableAltException e) {
 	        failed = true;
-					++errcount;
-					super.recover(e);
-			}
+	                ++errcount;
+	                super.recover(e);
+	        }
 
 
 	public jazzikLexer(CharStream input) {

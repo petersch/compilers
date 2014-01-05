@@ -130,6 +130,14 @@ public class jazzikBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements
 	 * The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.
 	 */
+	@Override public T visitForEach(@NotNull jazzikParser.ForEachContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.
+	 */
 	@Override public T visitInit(@NotNull jazzikParser.InitContext ctx) { return visitChildren(ctx); }
 
 	/**
@@ -170,6 +178,14 @@ public class jazzikBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements
 	 * The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.
 	 */
+	@Override public T visitContinueError(@NotNull jazzikParser.ContinueErrorContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.
+	 */
 	@Override public T visitRead(@NotNull jazzikParser.ReadContext ctx) { return visitChildren(ctx); }
 
 	/**
@@ -187,14 +203,6 @@ public class jazzikBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements
 	 * {@link #visitChildren} on {@code ctx}.
 	 */
 	@Override public T visitFuncdecls(@NotNull jazzikParser.FuncdeclsContext ctx) { return visitChildren(ctx); }
-
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.
-	 */
-	@Override public T visitBoolDecl(@NotNull jazzikParser.BoolDeclContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}
@@ -258,7 +266,7 @@ public class jazzikBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements
 	 * The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.
 	 */
-	@Override public T visitCond(@NotNull jazzikParser.CondContext ctx) { return visitChildren(ctx); }
+	@Override public T visitErrorBreak(@NotNull jazzikParser.ErrorBreakContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}
@@ -275,14 +283,6 @@ public class jazzikBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements
 	 * {@link #visitChildren} on {@code ctx}.
 	 */
 	@Override public T visitWriteStr(@NotNull jazzikParser.WriteStrContext ctx) { return visitChildren(ctx); }
-
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.
-	 */
-	@Override public T visitFuncArgCond(@NotNull jazzikParser.FuncArgCondContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}
@@ -354,7 +354,7 @@ public class jazzikBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements
 	 * The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.
 	 */
-	@Override public T visitInc(@NotNull jazzikParser.IncContext ctx) { return visitChildren(ctx); }
+	@Override public T visitVars(@NotNull jazzikParser.VarsContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}
@@ -363,14 +363,6 @@ public class jazzikBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements
 	 * {@link #visitChildren} on {@code ctx}.
 	 */
 	@Override public T visitPar(@NotNull jazzikParser.ParContext ctx) { return visitChildren(ctx); }
-
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.
-	 */
-	@Override public T visitVars(@NotNull jazzikParser.VarsContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}

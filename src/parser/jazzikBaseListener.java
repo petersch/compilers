@@ -199,6 +199,19 @@ public class jazzikBaseListener implements jazzikListener {
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
+	@Override public void enterForEach(@NotNull jazzikParser.ForEachContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitForEach(@NotNull jazzikParser.ForEachContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
 	@Override public void enterInit(@NotNull jazzikParser.InitContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -264,6 +277,19 @@ public class jazzikBaseListener implements jazzikListener {
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
+	@Override public void enterContinueError(@NotNull jazzikParser.ContinueErrorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitContinueError(@NotNull jazzikParser.ContinueErrorContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
 	@Override public void enterRead(@NotNull jazzikParser.ReadContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -297,19 +323,6 @@ public class jazzikBaseListener implements jazzikListener {
 	 * The default implementation does nothing.
 	 */
 	@Override public void exitFuncdecls(@NotNull jazzikParser.FuncdeclsContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void enterBoolDecl(@NotNull jazzikParser.BoolDeclContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void exitBoolDecl(@NotNull jazzikParser.BoolDeclContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
@@ -407,13 +420,13 @@ public class jazzikBaseListener implements jazzikListener {
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
-	@Override public void enterCond(@NotNull jazzikParser.CondContext ctx) { }
+	@Override public void enterErrorBreak(@NotNull jazzikParser.ErrorBreakContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
-	@Override public void exitCond(@NotNull jazzikParser.CondContext ctx) { }
+	@Override public void exitErrorBreak(@NotNull jazzikParser.ErrorBreakContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
@@ -440,19 +453,6 @@ public class jazzikBaseListener implements jazzikListener {
 	 * The default implementation does nothing.
 	 */
 	@Override public void exitWriteStr(@NotNull jazzikParser.WriteStrContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void enterFuncArgCond(@NotNull jazzikParser.FuncArgCondContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void exitFuncArgCond(@NotNull jazzikParser.FuncArgCondContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
@@ -563,13 +563,13 @@ public class jazzikBaseListener implements jazzikListener {
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
-	@Override public void enterInc(@NotNull jazzikParser.IncContext ctx) { }
+	@Override public void enterVars(@NotNull jazzikParser.VarsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
-	@Override public void exitInc(@NotNull jazzikParser.IncContext ctx) { }
+	@Override public void exitVars(@NotNull jazzikParser.VarsContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
@@ -583,19 +583,6 @@ public class jazzikBaseListener implements jazzikListener {
 	 * The default implementation does nothing.
 	 */
 	@Override public void exitPar(@NotNull jazzikParser.ParContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void enterVars(@NotNull jazzikParser.VarsContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void exitVars(@NotNull jazzikParser.VarsContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
