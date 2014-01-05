@@ -1,3 +1,7 @@
+FILE=`readlink -f $0`
+DIR=`dirname "$FILE"`
+cd $DIR
+
 cd grammar
 java -jar ../lib/antlr-4.1-complete.jar -visitor -o ../src/parser -package parser jazzik.g4
 cd ..
