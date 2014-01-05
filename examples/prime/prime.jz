@@ -2,14 +2,14 @@ void main() {
 	int n
 	read n
 
-	int pole[n-2]
-	for i in 0...n-2 {
+	int pole[n-1]
+	for i in 0...n-1 {
 		pole[i] = i+2
 	}
 	
-	for i in 0...n-2 {
+	for i in 0...n-1 {
 		unless pole[i] == 0 {
-			for j in (i+1)...n-2 {
+			for j in (i+1)...n-1 {
 				if pole[j] % pole[i] == 0 {
 					pole[j] = 0
 				}
@@ -17,7 +17,7 @@ void main() {
 		}
 	}
 	
-	for i in 0...n-2 {
+	for i in 0...n-1 {
 		unless pole[i] == 0 {
 			write pole[i]
 		}
