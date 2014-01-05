@@ -588,6 +588,25 @@ public class CompilerVisitor extends jazzikBaseVisitor<CodeFragment> {
     }
     
     @Override
+    public CodeFragment visitBin(jazzikParser.BinContext ctx) {
+        CodeFragment code = new CodeFragment();
+        CodeFragment left = visit(ctx.expression(0));
+        CodeFragment right = visit(ctx.expression(1));
+        code.addCode(left);
+        code.addCode(right);
+        String register = generateNewRegister();
+        code.setRegister(register);
+        String operator = "OPERATOR";
+        switch (ctx.op.getType()) {
+            case jazzikParser.IAND: operator = "and"; break;
+            case jazzikParser.IOR: operator = "or"; break;
+            case jazzikParser.IXOR: operator = "xor"; break;
+        }
+        code.addCode(String.format("  %s = %s i32 %s, %s\n", register, operator, left.getRegister(), right.getRegister()));
+        return code;
+    }
+    
+    @Override
     public CodeFragment visitAdd(jazzikParser.AddContext ctx) {
         CodeFragment code = new CodeFragment();
         CodeFragment left = visit(ctx.expression(0));
