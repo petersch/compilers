@@ -5,11 +5,13 @@ public class CodeFragment {
     private String global;
     private String register;
     private String funcargs;
+    private String signature;
 
     public CodeFragment() {
         this.code = "";
         this.global = "";
         this.funcargs = "";
+        this.signature = "";
         this.register = null;
     }
 
@@ -33,6 +35,7 @@ public class CodeFragment {
         this.global += fragment.global;
         this.code += fragment.code;
         addFuncArg(fragment.funcargs);
+        addSignature(fragment.signature);
     }
 
     public String toString() {
@@ -63,5 +66,15 @@ public class CodeFragment {
     
     public String getFuncArgs() {
         return funcargs;
+    }
+    
+    public void addSignature(String arg) {
+        if (!this.signature.isEmpty())
+            this.signature += ", ";
+        this.signature += arg;
+    }
+    
+    public String getSignature() {
+        return signature;
     }
 }

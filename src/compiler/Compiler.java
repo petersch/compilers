@@ -34,6 +34,11 @@ public class Compiler {
 
         CompilerVisitor eval = new CompilerVisitor(tokens);
         CodeFragment code = eval.visit(tree);
-        System.out.print(code.toString());
+        if (eval.failed) {
+            System.err.print(eval.errorStr);
+        }
+        else {
+            System.out.print(code.toString());
+        }
     }
 }
