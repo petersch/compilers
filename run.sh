@@ -1,3 +1,5 @@
+#!/bin/bash
+
 OLD=`pwd`
 FILE=`readlink -f $0`
 DIR=`dirname "$FILE"`
