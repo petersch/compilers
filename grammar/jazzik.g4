@@ -7,16 +7,16 @@ grammar jazzik;
     @Override
     public void recover(RecognitionException e) {
         failed = true;
-                ++errcount;
-                super.recover(e);
-      }
+        ++errcount;
+        super.recover(e);
+    }
 
-        @Override
+    @Override
     public void recover(LexerNoViableAltException e) {
         failed = true;
-                ++errcount;
-                super.recover(e);
-        }
+        ++errcount;
+        super.recover(e);
+    }
 }
 
 init: funcdecls;
@@ -91,7 +91,7 @@ vardecl:
     ('int'|'bool') intvardecl (',' intvardecl)*
     ;
 intvardecl:
-    name=ID ('=' expression)?         # IntDecl
+    name=ID ('=' expression)?       # IntDecl
     | name=ID '[' expression ']'    # ArrayDecl
     ;
 
