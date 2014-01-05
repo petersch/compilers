@@ -14,13 +14,25 @@ public class Compiler {
         if ( args.length>0 ) inputFile = args[0];
         InputStream is = System.in;
         if ( inputFile!=null ) is = new FileInputStream(inputFile);
+        
         ANTLRInputStream input = new ANTLRInputStream(is);
         jazzikLexer lexer = new jazzikLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
+        
         jazzikParser parser = new jazzikParser(tokens);
-        ParseTree tree = parser.init(); // parse
+        parser.removeErrorListeners();
+        parser.addErrorListener(new ParserErrorListener());
+        ParseTree tree = parser.init();
+        
+        if (lexer.failed || parser.getNumberOfSyntaxErrors() > 0) {
+            if (lexer.failed)
+                System.err.println(String.format("lexer failed with %d errors", lexer.errcount));
+            if (parser.getNumberOfSyntaxErrors() > 0)
+                System.err.println(String.format("parser failed with %d errors", parser.getNumberOfSyntaxErrors()));
+            return;
+        }
 
-        CompilerVisitor eval = new CompilerVisitor();
+        CompilerVisitor eval = new CompilerVisitor(tokens);
         CodeFragment code = eval.visit(tree);
         System.out.print(code.toString());
     }
