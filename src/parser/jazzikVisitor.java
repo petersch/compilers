@@ -12,32 +12,11 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  */
 public interface jazzikVisitor<T> extends ParseTreeVisitor<T> {
 	/**
-	 * Visit a parse tree produced by {@link jazzikParser#range}.
+	 * Visit a parse tree produced by {@link jazzikParser#AssignArray}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitRange(@NotNull jazzikParser.RangeContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link jazzikParser#ArrayDecl}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitArrayDecl(@NotNull jazzikParser.ArrayDeclContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link jazzikParser#Continue}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitContinue(@NotNull jazzikParser.ContinueContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link jazzikParser#WriteInt}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitWriteInt(@NotNull jazzikParser.WriteIntContext ctx);
+	T visitAssignArray(@NotNull jazzikParser.AssignArrayContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link jazzikParser#Una}.
@@ -47,25 +26,11 @@ public interface jazzikVisitor<T> extends ParseTreeVisitor<T> {
 	T visitUna(@NotNull jazzikParser.UnaContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link jazzikParser#block}.
+	 * Visit a parse tree produced by {@link jazzikParser#ErrorNested}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitBlock(@NotNull jazzikParser.BlockContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link jazzikParser#cond}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCond(@NotNull jazzikParser.CondContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link jazzikParser#BoolVarDecl}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitBoolVarDecl(@NotNull jazzikParser.BoolVarDeclContext ctx);
+	T visitErrorNested(@NotNull jazzikParser.ErrorNestedContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link jazzikParser#Mul}.
@@ -75,18 +40,18 @@ public interface jazzikVisitor<T> extends ParseTreeVisitor<T> {
 	T visitMul(@NotNull jazzikParser.MulContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link jazzikParser#ifstatement}.
+	 * Visit a parse tree produced by {@link jazzikParser#VarDecl}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitIfstatement(@NotNull jazzikParser.IfstatementContext ctx);
+	T visitVarDecl(@NotNull jazzikParser.VarDeclContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link jazzikParser#ArrayAccess}.
+	 * Visit a parse tree produced by {@link jazzikParser#While}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitArrayAccess(@NotNull jazzikParser.ArrayAccessContext ctx);
+	T visitWhile(@NotNull jazzikParser.WhileContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link jazzikParser#Add}.
@@ -96,18 +61,11 @@ public interface jazzikVisitor<T> extends ParseTreeVisitor<T> {
 	T visitAdd(@NotNull jazzikParser.AddContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link jazzikParser#forstatement}.
+	 * Visit a parse tree produced by {@link jazzikParser#ForStm}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitForstatement(@NotNull jazzikParser.ForstatementContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link jazzikParser#For}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitFor(@NotNull jazzikParser.ForContext ctx);
+	T visitForStm(@NotNull jazzikParser.ForStmContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link jazzikParser#Expr}.
@@ -117,25 +75,39 @@ public interface jazzikVisitor<T> extends ParseTreeVisitor<T> {
 	T visitExpr(@NotNull jazzikParser.ExprContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link jazzikParser#funcdef}.
+	 * Visit a parse tree produced by {@link jazzikParser#Size}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitFuncdef(@NotNull jazzikParser.FuncdefContext ctx);
+	T visitSize(@NotNull jazzikParser.SizeContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link jazzikParser#VarAccess}.
+	 * Visit a parse tree produced by {@link jazzikParser#FuncArgDecl}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitVarAccess(@NotNull jazzikParser.VarAccessContext ctx);
+	T visitFuncArgDecl(@NotNull jazzikParser.FuncArgDeclContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link jazzikParser#Break}.
+	 * Visit a parse tree produced by {@link jazzikParser#Assign}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitBreak(@NotNull jazzikParser.BreakContext ctx);
+	T visitAssign(@NotNull jazzikParser.AssignContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link jazzikParser#FuncDef}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFuncDef(@NotNull jazzikParser.FuncDefContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link jazzikParser#FuncArgExpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFuncArgExpr(@NotNull jazzikParser.FuncArgExprContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link jazzikParser#init}.
@@ -145,39 +117,11 @@ public interface jazzikVisitor<T> extends ParseTreeVisitor<T> {
 	T visitInit(@NotNull jazzikParser.InitContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link jazzikParser#FuncCall}.
+	 * Visit a parse tree produced by {@link jazzikParser#funccall}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitFuncCall(@NotNull jazzikParser.FuncCallContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link jazzikParser#Par}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitPar(@NotNull jazzikParser.ParContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link jazzikParser#Vars}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitVars(@NotNull jazzikParser.VarsContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link jazzikParser#AssignNope}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitAssignNope(@NotNull jazzikParser.AssignNopeContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link jazzikParser#ReturnBool}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitReturnBool(@NotNull jazzikParser.ReturnBoolContext ctx);
+	T visitFunccall(@NotNull jazzikParser.FunccallContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link jazzikParser#Bin}.
@@ -187,34 +131,6 @@ public interface jazzikVisitor<T> extends ParseTreeVisitor<T> {
 	T visitBin(@NotNull jazzikParser.BinContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link jazzikParser#Nop}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNop(@NotNull jazzikParser.NopContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link jazzikParser#ReturnInt}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitReturnInt(@NotNull jazzikParser.ReturnIntContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link jazzikParser#IntVarDecl}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitIntVarDecl(@NotNull jazzikParser.IntVarDeclContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link jazzikParser#lvalue}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitLvalue(@NotNull jazzikParser.LvalueContext ctx);
-
-	/**
 	 * Visit a parse tree produced by {@link jazzikParser#IntConstant}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -222,25 +138,11 @@ public interface jazzikVisitor<T> extends ParseTreeVisitor<T> {
 	T visitIntConstant(@NotNull jazzikParser.IntConstantContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link jazzikParser#AssignInt}.
+	 * Visit a parse tree produced by {@link jazzikParser#Cmp}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitAssignInt(@NotNull jazzikParser.AssignIntContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link jazzikParser#ReturnVoid}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitReturnVoid(@NotNull jazzikParser.ReturnVoidContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link jazzikParser#AssignBool}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitAssignBool(@NotNull jazzikParser.AssignBoolContext ctx);
+	T visitCmp(@NotNull jazzikParser.CmpContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link jazzikParser#Read}.
@@ -257,9 +159,205 @@ public interface jazzikVisitor<T> extends ParseTreeVisitor<T> {
 	T visitIf(@NotNull jazzikParser.IfContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link jazzikParser#funcargdef}.
+	 * Visit a parse tree produced by {@link jazzikParser#funcdecls}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitFuncargdef(@NotNull jazzikParser.FuncargdefContext ctx);
+	T visitFuncdecls(@NotNull jazzikParser.FuncdeclsContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link jazzikParser#BoolDecl}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBoolDecl(@NotNull jazzikParser.BoolDeclContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link jazzikParser#ReadArray}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitReadArray(@NotNull jazzikParser.ReadArrayContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link jazzikParser#funcargs}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFuncargs(@NotNull jazzikParser.FuncargsContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link jazzikParser#ArrayDecl}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArrayDecl(@NotNull jazzikParser.ArrayDeclContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link jazzikParser#WriteInt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitWriteInt(@NotNull jazzikParser.WriteIntContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link jazzikParser#block}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBlock(@NotNull jazzikParser.BlockContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link jazzikParser#IfStm}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIfStm(@NotNull jazzikParser.IfStmContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link jazzikParser#FuncArgDecls}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFuncArgDecls(@NotNull jazzikParser.FuncArgDeclsContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link jazzikParser#cond}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCond(@NotNull jazzikParser.CondContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link jazzikParser#IntDecl}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIntDecl(@NotNull jazzikParser.IntDeclContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link jazzikParser#WriteStr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitWriteStr(@NotNull jazzikParser.WriteStrContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link jazzikParser#FuncArgCond}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFuncArgCond(@NotNull jazzikParser.FuncArgCondContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link jazzikParser#Log}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLog(@NotNull jazzikParser.LogContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link jazzikParser#FuncExtern}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFuncExtern(@NotNull jazzikParser.FuncExternContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link jazzikParser#Write}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitWrite(@NotNull jazzikParser.WriteContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link jazzikParser#ArrayAccess}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArrayAccess(@NotNull jazzikParser.ArrayAccessContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link jazzikParser#For}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFor(@NotNull jazzikParser.ForContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link jazzikParser#ReadInt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitReadInt(@NotNull jazzikParser.ReadIntContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link jazzikParser#VarAccess}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVarAccess(@NotNull jazzikParser.VarAccessContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link jazzikParser#FuncCall}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFuncCall(@NotNull jazzikParser.FuncCallContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link jazzikParser#Inc}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInc(@NotNull jazzikParser.IncContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link jazzikParser#Par}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPar(@NotNull jazzikParser.ParContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link jazzikParser#Vars}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVars(@NotNull jazzikParser.VarsContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link jazzikParser#FuncArgID}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFuncArgID(@NotNull jazzikParser.FuncArgIDContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link jazzikParser#ReturnInt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitReturnInt(@NotNull jazzikParser.ReturnIntContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link jazzikParser#AssignInt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAssignInt(@NotNull jazzikParser.AssignIntContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link jazzikParser#vardecl}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVardecl(@NotNull jazzikParser.VardeclContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link jazzikParser#Unless}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitUnless(@NotNull jazzikParser.UnlessContext ctx);
 }
