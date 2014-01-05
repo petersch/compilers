@@ -41,6 +41,8 @@ statement:
     | ifstatement                                      # IfStm
     | 'return' expression?                             # ReturnInt
     | expression                                       # Expr
+		| 'break' { notifyErrorListeners("break statement is not supported"); } # ErrorBreak
+		| 'continue' { notifyErrorListeners("continue statement is not supported"); } # ContinueError
 		| funcdecl { notifyErrorListeners("nested functions are not allowed"); } # ErrorNested
     ;
 
