@@ -40,18 +40,18 @@ public interface jazzikVisitor<T> extends ParseTreeVisitor<T> {
 	T visitMul(@NotNull jazzikParser.MulContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link jazzikParser#VarDecl}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitVarDecl(@NotNull jazzikParser.VarDeclContext ctx);
-
-	/**
 	 * Visit a parse tree produced by {@link jazzikParser#While}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitWhile(@NotNull jazzikParser.WhileContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link jazzikParser#VarDecl}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVarDecl(@NotNull jazzikParser.VarDeclContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link jazzikParser#Add}.
@@ -66,6 +66,13 @@ public interface jazzikVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitForStm(@NotNull jazzikParser.ForStmContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link jazzikParser#WriteID}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitWriteID(@NotNull jazzikParser.WriteIDContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link jazzikParser#Expr}.

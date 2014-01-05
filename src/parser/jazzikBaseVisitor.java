@@ -50,7 +50,7 @@ public class jazzikBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements
 	 * The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.
 	 */
-	@Override public T visitVarDecl(@NotNull jazzikParser.VarDeclContext ctx) { return visitChildren(ctx); }
+	@Override public T visitWhile(@NotNull jazzikParser.WhileContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}
@@ -58,7 +58,7 @@ public class jazzikBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements
 	 * The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.
 	 */
-	@Override public T visitWhile(@NotNull jazzikParser.WhileContext ctx) { return visitChildren(ctx); }
+	@Override public T visitVarDecl(@NotNull jazzikParser.VarDeclContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}
@@ -75,6 +75,14 @@ public class jazzikBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements
 	 * {@link #visitChildren} on {@code ctx}.
 	 */
 	@Override public T visitForStm(@NotNull jazzikParser.ForStmContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.
+	 */
+	@Override public T visitWriteID(@NotNull jazzikParser.WriteIDContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}

@@ -69,19 +69,6 @@ public class jazzikBaseListener implements jazzikListener {
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
-	@Override public void enterVarDecl(@NotNull jazzikParser.VarDeclContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void exitVarDecl(@NotNull jazzikParser.VarDeclContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
 	@Override public void enterWhile(@NotNull jazzikParser.WhileContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -89,6 +76,19 @@ public class jazzikBaseListener implements jazzikListener {
 	 * The default implementation does nothing.
 	 */
 	@Override public void exitWhile(@NotNull jazzikParser.WhileContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void enterVarDecl(@NotNull jazzikParser.VarDeclContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitVarDecl(@NotNull jazzikParser.VarDeclContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
@@ -115,6 +115,19 @@ public class jazzikBaseListener implements jazzikListener {
 	 * The default implementation does nothing.
 	 */
 	@Override public void exitForStm(@NotNull jazzikParser.ForStmContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void enterWriteID(@NotNull jazzikParser.WriteIDContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitWriteID(@NotNull jazzikParser.WriteIDContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

@@ -1468,35 +1468,53 @@ public class jazzikParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
+	public static class WriteIDContext extends WriteargContext {
+		public TerminalNode ID() { return getToken(jazzikParser.ID, 0); }
+		public WriteIDContext(WriteargContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof jazzikListener ) ((jazzikListener)listener).enterWriteID(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof jazzikListener ) ((jazzikListener)listener).exitWriteID(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof jazzikVisitor ) return ((jazzikVisitor<? extends T>)visitor).visitWriteID(this);
+			else return visitor.visitChildren(this);
+		}
+	}
 
 	public final WriteargContext writearg() throws RecognitionException {
 		WriteargContext _localctx = new WriteargContext(_ctx, getState());
 		enterRule(_localctx, 16, RULE_writearg);
 		try {
-			setState(206);
-			switch (_input.LA(1)) {
-			case INT:
-			case ADD:
-			case SUB:
-			case NEG:
-			case SIZE:
-			case ID:
-			case PAREN_BEGIN:
-				_localctx = new WriteIntContext(_localctx);
+			setState(207);
+			switch ( getInterpreter().adaptivePredict(_input,22,_ctx) ) {
+			case 1:
+				_localctx = new WriteIDContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(204); expression(0);
+				setState(204); match(ID);
 				}
 				break;
-			case STRING:
-				_localctx = new WriteStrContext(_localctx);
+
+			case 2:
+				_localctx = new WriteIntContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(205); match(STRING);
+				setState(205); expression(0);
 				}
 				break;
-			default:
-				throw new NoViableAltException(this);
+
+			case 3:
+				_localctx = new WriteStrContext(_localctx);
+				enterOuterAlt(_localctx, 3);
+				{
+				setState(206); match(STRING);
+				}
+				break;
 			}
 		}
 		catch (RecognitionException re) {
@@ -1563,16 +1581,16 @@ public class jazzikParser extends Parser {
 		ReadargContext _localctx = new ReadargContext(_ctx, getState());
 		enterRule(_localctx, 18, RULE_readarg);
 		try {
-			setState(214);
+			setState(215);
 			switch ( getInterpreter().adaptivePredict(_input,23,_ctx) ) {
 			case 1:
 				_localctx = new ReadArrayContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(208); match(ID);
-				setState(209); match(ARRAY_BEGIN);
-				setState(210); expression(0);
-				setState(211); match(ARRAY_END);
+				setState(209); match(ID);
+				setState(210); match(ARRAY_BEGIN);
+				setState(211); expression(0);
+				setState(212); match(ARRAY_END);
 				}
 				break;
 
@@ -1580,7 +1598,7 @@ public class jazzikParser extends Parser {
 				_localctx = new ReadIntContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(213); match(ID);
+				setState(214); match(ID);
 				}
 				break;
 			}
@@ -1627,17 +1645,17 @@ public class jazzikParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(216); match(ID);
-			setState(217); match(PAREN_BEGIN);
-			setState(219);
+			setState(217); match(ID);
+			setState(218); match(PAREN_BEGIN);
+			setState(220);
 			_la = _input.LA(1);
 			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << INT) | (1L << ADD) | (1L << SUB) | (1L << NEG) | (1L << SIZE) | (1L << ID) | (1L << PAREN_BEGIN))) != 0)) {
 				{
-				setState(218); funcargs();
+				setState(219); funcargs();
 				}
 			}
 
-			setState(221); match(PAREN_END);
+			setState(222); match(PAREN_END);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1684,18 +1702,18 @@ public class jazzikParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(223); funcarg();
-			setState(228);
+			setState(224); funcarg();
+			setState(229);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				setState(224); match(COMMA);
-				setState(225); funcarg();
+				setState(225); match(COMMA);
+				setState(226); funcarg();
 				}
 				}
-				setState(230);
+				setState(231);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -1764,13 +1782,13 @@ public class jazzikParser extends Parser {
 		FuncargContext _localctx = new FuncargContext(_ctx, getState());
 		enterRule(_localctx, 24, RULE_funcarg);
 		try {
-			setState(233);
+			setState(234);
 			switch ( getInterpreter().adaptivePredict(_input,26,_ctx) ) {
 			case 1:
 				_localctx = new FuncArgIDContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(231); match(ID);
+				setState(232); match(ID);
 				}
 				break;
 
@@ -1778,7 +1796,7 @@ public class jazzikParser extends Parser {
 				_localctx = new FuncArgExprContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(232); expression(0);
+				setState(233); expression(0);
 				}
 				break;
 			}
@@ -1827,24 +1845,24 @@ public class jazzikParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(235);
+			setState(236);
 			_la = _input.LA(1);
 			if ( !(_la==INT_TYPE || _la==BOOL_TYPE) ) {
 			_errHandler.recoverInline(this);
 			}
 			consume();
-			setState(236); intvardecl();
-			setState(241);
+			setState(237); intvardecl();
+			setState(242);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				setState(237); match(COMMA);
-				setState(238); intvardecl();
+				setState(238); match(COMMA);
+				setState(239); intvardecl();
 				}
 				}
-				setState(243);
+				setState(244);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -1920,19 +1938,19 @@ public class jazzikParser extends Parser {
 		enterRule(_localctx, 28, RULE_intvardecl);
 		int _la;
 		try {
-			setState(254);
+			setState(255);
 			switch ( getInterpreter().adaptivePredict(_input,29,_ctx) ) {
 			case 1:
 				_localctx = new IntDeclContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(244); ((IntDeclContext)_localctx).name = match(ID);
-				setState(247);
+				setState(245); ((IntDeclContext)_localctx).name = match(ID);
+				setState(248);
 				_la = _input.LA(1);
 				if (_la==ASSIGN) {
 					{
-					setState(245); match(ASSIGN);
-					setState(246); expression(0);
+					setState(246); match(ASSIGN);
+					setState(247); expression(0);
 					}
 				}
 
@@ -1943,10 +1961,10 @@ public class jazzikParser extends Parser {
 				_localctx = new ArrayDeclContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(249); ((ArrayDeclContext)_localctx).name = match(ID);
-				setState(250); match(ARRAY_BEGIN);
-				setState(251); expression(0);
-				setState(252); match(ARRAY_END);
+				setState(250); ((ArrayDeclContext)_localctx).name = match(ID);
+				setState(251); match(ARRAY_BEGIN);
+				setState(252); expression(0);
+				setState(253); match(ARRAY_END);
 				}
 				break;
 			}
@@ -2015,13 +2033,13 @@ public class jazzikParser extends Parser {
 		VaraccessContext _localctx = new VaraccessContext(_ctx, getState());
 		enterRule(_localctx, 30, RULE_varaccess);
 		try {
-			setState(262);
+			setState(263);
 			switch ( getInterpreter().adaptivePredict(_input,30,_ctx) ) {
 			case 1:
 				_localctx = new VarAccessContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(256); match(ID);
+				setState(257); match(ID);
 				}
 				break;
 
@@ -2029,10 +2047,10 @@ public class jazzikParser extends Parser {
 				_localctx = new ArrayAccessContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(257); match(ID);
-				setState(258); match(ARRAY_BEGIN);
-				setState(259); expression(0);
-				setState(260); match(ARRAY_END);
+				setState(258); match(ID);
+				setState(259); match(ARRAY_BEGIN);
+				setState(260); expression(0);
+				setState(261); match(ARRAY_END);
 				}
 				break;
 			}
@@ -2111,15 +2129,15 @@ public class jazzikParser extends Parser {
 		AssignmentContext _localctx = new AssignmentContext(_ctx, getState());
 		enterRule(_localctx, 32, RULE_assignment);
 		try {
-			setState(274);
+			setState(275);
 			switch ( getInterpreter().adaptivePredict(_input,31,_ctx) ) {
 			case 1:
 				_localctx = new AssignIntContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(264); ((AssignIntContext)_localctx).name = match(ID);
-				setState(265); match(ASSIGN);
-				setState(266); expression(0);
+				setState(265); ((AssignIntContext)_localctx).name = match(ID);
+				setState(266); match(ASSIGN);
+				setState(267); expression(0);
 				}
 				break;
 
@@ -2127,12 +2145,12 @@ public class jazzikParser extends Parser {
 				_localctx = new AssignArrayContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(267); ((AssignArrayContext)_localctx).name = match(ID);
-				setState(268); match(ARRAY_BEGIN);
-				setState(269); ((AssignArrayContext)_localctx).index = expression(0);
-				setState(270); match(ARRAY_END);
-				setState(271); match(ASSIGN);
-				setState(272); ((AssignArrayContext)_localctx).value = expression(0);
+				setState(268); ((AssignArrayContext)_localctx).name = match(ID);
+				setState(269); match(ARRAY_BEGIN);
+				setState(270); ((AssignArrayContext)_localctx).index = expression(0);
+				setState(271); match(ARRAY_END);
+				setState(272); match(ASSIGN);
+				setState(273); ((AssignArrayContext)_localctx).value = expression(0);
 				}
 				break;
 			}
@@ -2215,21 +2233,21 @@ public class jazzikParser extends Parser {
 		enterRule(_localctx, 34, RULE_ifstatement);
 		int _la;
 		try {
-			setState(290);
+			setState(291);
 			switch (_input.LA(1)) {
 			case IF:
 				_localctx = new IfContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(276); match(IF);
-				setState(277); expression(0);
-				setState(278); block();
-				setState(281);
+				setState(277); match(IF);
+				setState(278); expression(0);
+				setState(279); block();
+				setState(282);
 				_la = _input.LA(1);
 				if (_la==ELSE) {
 					{
-					setState(279); match(ELSE);
-					setState(280); block();
+					setState(280); match(ELSE);
+					setState(281); block();
 					}
 				}
 
@@ -2239,15 +2257,15 @@ public class jazzikParser extends Parser {
 				_localctx = new UnlessContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(283); match(UNLESS);
-				setState(284); expression(0);
-				setState(285); block();
-				setState(288);
+				setState(284); match(UNLESS);
+				setState(285); expression(0);
+				setState(286); block();
+				setState(289);
 				_la = _input.LA(1);
 				if (_la==ELSE) {
 					{
-					setState(286); match(ELSE);
-					setState(287); block();
+					setState(287); match(ELSE);
+					setState(288); block();
 					}
 				}
 
@@ -2357,25 +2375,25 @@ public class jazzikParser extends Parser {
 		enterRule(_localctx, 36, RULE_forstatement);
 		int _la;
 		try {
-			setState(309);
+			setState(310);
 			switch ( getInterpreter().adaptivePredict(_input,35,_ctx) ) {
 			case 1:
 				_localctx = new ForContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(292); match(FOR);
-				setState(293); match(ID);
-				setState(294); match(IN);
-				setState(295); expression(0);
-				setState(296);
+				setState(293); match(FOR);
+				setState(294); match(ID);
+				setState(295); match(IN);
+				setState(296); expression(0);
+				setState(297);
 				((ForContext)_localctx).rtype = _input.LT(1);
 				_la = _input.LA(1);
 				if ( !(_la==INC_RANGE || _la==EXC_RANGE) ) {
 					((ForContext)_localctx).rtype = (Token)_errHandler.recoverInline(this);
 				}
 				consume();
-				setState(297); expression(0);
-				setState(298); block();
+				setState(298); expression(0);
+				setState(299); block();
 				}
 				break;
 
@@ -2383,11 +2401,11 @@ public class jazzikParser extends Parser {
 				_localctx = new ForEachContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(300); match(FOR);
-				setState(301); match(ID);
-				setState(302); match(IN);
-				setState(303); match(ID);
-				setState(304); block();
+				setState(301); match(FOR);
+				setState(302); match(ID);
+				setState(303); match(IN);
+				setState(304); match(ID);
+				setState(305); block();
 				}
 				break;
 
@@ -2395,9 +2413,9 @@ public class jazzikParser extends Parser {
 				_localctx = new WhileContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(305); match(WHILE);
-				setState(306); expression(0);
-				setState(307); block();
+				setState(306); match(WHILE);
+				setState(307); expression(0);
+				setState(308); block();
 				}
 				break;
 			}
@@ -2435,7 +2453,7 @@ public class jazzikParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\uacf5\uee8c\u4f5d\u8b0d\u4a45\u78bd\u1b2f\u3378\38\u013a\4\2\t\2\4"+
+		"\3\uacf5\uee8c\u4f5d\u8b0d\u4a45\u78bd\u1b2f\u3378\38\u013b\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\3\2\3\2\3\3\7\3,\n\3\f\3\16\3/\13\3\3\3\7\3\62\n"+
@@ -2449,41 +2467,41 @@ public class jazzikParser extends Parser {
 		"\b\u009a\n\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\5\b\u00a4\n\b\3\t\3\t\3\t"+
 		"\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\5\t\u00b4\n\t\3\t\3\t\3\t"+
 		"\5\t\u00b9\n\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t"+
-		"\3\t\7\t\u00ca\n\t\f\t\16\t\u00cd\13\t\3\n\3\n\5\n\u00d1\n\n\3\13\3\13"+
-		"\3\13\3\13\3\13\3\13\5\13\u00d9\n\13\3\f\3\f\3\f\5\f\u00de\n\f\3\f\3\f"+
-		"\3\r\3\r\3\r\7\r\u00e5\n\r\f\r\16\r\u00e8\13\r\3\16\3\16\5\16\u00ec\n"+
-		"\16\3\17\3\17\3\17\3\17\7\17\u00f2\n\17\f\17\16\17\u00f5\13\17\3\20\3"+
-		"\20\3\20\5\20\u00fa\n\20\3\20\3\20\3\20\3\20\3\20\5\20\u0101\n\20\3\21"+
-		"\3\21\3\21\3\21\3\21\3\21\5\21\u0109\n\21\3\22\3\22\3\22\3\22\3\22\3\22"+
-		"\3\22\3\22\3\22\3\22\5\22\u0115\n\22\3\23\3\23\3\23\3\23\3\23\5\23\u011c"+
-		"\n\23\3\23\3\23\3\23\3\23\3\23\5\23\u0123\n\23\5\23\u0125\n\23\3\24\3"+
+		"\3\t\7\t\u00ca\n\t\f\t\16\t\u00cd\13\t\3\n\3\n\3\n\5\n\u00d2\n\n\3\13"+
+		"\3\13\3\13\3\13\3\13\3\13\5\13\u00da\n\13\3\f\3\f\3\f\5\f\u00df\n\f\3"+
+		"\f\3\f\3\r\3\r\3\r\7\r\u00e6\n\r\f\r\16\r\u00e9\13\r\3\16\3\16\5\16\u00ed"+
+		"\n\16\3\17\3\17\3\17\3\17\7\17\u00f3\n\17\f\17\16\17\u00f6\13\17\3\20"+
+		"\3\20\3\20\5\20\u00fb\n\20\3\20\3\20\3\20\3\20\3\20\5\20\u0102\n\20\3"+
+		"\21\3\21\3\21\3\21\3\21\3\21\5\21\u010a\n\21\3\22\3\22\3\22\3\22\3\22"+
+		"\3\22\3\22\3\22\3\22\3\22\5\22\u0116\n\22\3\23\3\23\3\23\3\23\3\23\5\23"+
+		"\u011d\n\23\3\23\3\23\3\23\3\23\3\23\5\23\u0124\n\23\5\23\u0126\n\23\3"+
 		"\24\3\24\3\24\3\24\3\24\3\24\3\24\3\24\3\24\3\24\3\24\3\24\3\24\3\24\3"+
-		"\24\3\24\5\24\u0138\n\24\3\24\2\25\2\4\6\b\n\f\16\20\22\24\26\30\32\34"+
-		"\36 \"$&\2\f\4\2\36\36  \3\2\35\37\4\2\16\17\24\24\4\2\f\r\20\20\3\2\21"+
-		"\23\3\2\16\17\3\2\27\34\3\2\25\26\3\2\36\37\3\2\65\66\u015b\2(\3\2\2\2"+
-		"\4\63\3\2\2\2\6L\3\2\2\2\bN\3\2\2\2\nV\3\2\2\2\f\\\3\2\2\2\16\u00a3\3"+
-		"\2\2\2\20\u00b8\3\2\2\2\22\u00d0\3\2\2\2\24\u00d8\3\2\2\2\26\u00da\3\2"+
-		"\2\2\30\u00e1\3\2\2\2\32\u00eb\3\2\2\2\34\u00ed\3\2\2\2\36\u0100\3\2\2"+
-		"\2 \u0108\3\2\2\2\"\u0114\3\2\2\2$\u0124\3\2\2\2&\u0137\3\2\2\2()\5\4"+
-		"\3\2)\3\3\2\2\2*,\7\67\2\2+*\3\2\2\2,/\3\2\2\2-+\3\2\2\2-.\3\2\2\2.\60"+
-		"\3\2\2\2/-\3\2\2\2\60\62\5\6\4\2\61-\3\2\2\2\62\65\3\2\2\2\63\61\3\2\2"+
-		"\2\63\64\3\2\2\2\649\3\2\2\2\65\63\3\2\2\2\668\7\67\2\2\67\66\3\2\2\2"+
-		"8;\3\2\2\29\67\3\2\2\29:\3\2\2\2:\5\3\2\2\2;9\3\2\2\2<=\t\2\2\2=>\7.\2"+
-		"\2>@\7\61\2\2?A\5\b\5\2@?\3\2\2\2@A\3\2\2\2AB\3\2\2\2BC\7\62\2\2CM\5\f"+
-		"\7\2DE\7(\2\2EF\t\2\2\2FG\7.\2\2GI\7\61\2\2HJ\5\b\5\2IH\3\2\2\2IJ\3\2"+
-		"\2\2JK\3\2\2\2KM\7\62\2\2L<\3\2\2\2LD\3\2\2\2M\7\3\2\2\2NS\5\n\6\2OP\7"+
-		"\7\2\2PR\5\n\6\2QO\3\2\2\2RU\3\2\2\2SQ\3\2\2\2ST\3\2\2\2T\t\3\2\2\2US"+
-		"\3\2\2\2VW\t\3\2\2WX\7.\2\2X\13\3\2\2\2Y[\7\67\2\2ZY\3\2\2\2[^\3\2\2\2"+
-		"\\Z\3\2\2\2\\]\3\2\2\2]_\3\2\2\2^\\\3\2\2\2_r\7/\2\2`b\7\67\2\2a`\3\2"+
-		"\2\2be\3\2\2\2ca\3\2\2\2cd\3\2\2\2df\3\2\2\2ec\3\2\2\2fo\5\16\b\2gi\7"+
-		"\67\2\2hg\3\2\2\2ij\3\2\2\2jh\3\2\2\2jk\3\2\2\2kl\3\2\2\2ln\5\16\b\2m"+
-		"h\3\2\2\2nq\3\2\2\2om\3\2\2\2op\3\2\2\2ps\3\2\2\2qo\3\2\2\2rc\3\2\2\2"+
-		"rs\3\2\2\2sw\3\2\2\2tv\7\67\2\2ut\3\2\2\2vy\3\2\2\2wu\3\2\2\2wx\3\2\2"+
-		"\2xz\3\2\2\2yw\3\2\2\2z~\7\60\2\2{}\7\67\2\2|{\3\2\2\2}\u0080\3\2\2\2"+
-		"~|\3\2\2\2~\177\3\2\2\2\177\r\3\2\2\2\u0080~\3\2\2\2\u0081\u00a4\5\"\22"+
-		"\2\u0082\u00a4\5\34\17\2\u0083\u0084\7*\2\2\u0084\u0089\5\22\n\2\u0085"+
-		"\u0086\7\7\2\2\u0086\u0088\5\22\n\2\u0087\u0085\3\2\2\2\u0088\u008b\3"+
-		"\2\2\2\u0089\u0087\3\2\2\2\u0089\u008a\3\2\2\2\u008a\u00a4\3\2\2\2\u008b"+
+		"\24\3\24\3\24\5\24\u0139\n\24\3\24\2\25\2\4\6\b\n\f\16\20\22\24\26\30"+
+		"\32\34\36 \"$&\2\f\4\2\36\36  \3\2\35\37\4\2\16\17\24\24\4\2\f\r\20\20"+
+		"\3\2\21\23\3\2\16\17\3\2\27\34\3\2\25\26\3\2\36\37\3\2\65\66\u015d\2("+
+		"\3\2\2\2\4\63\3\2\2\2\6L\3\2\2\2\bN\3\2\2\2\nV\3\2\2\2\f\\\3\2\2\2\16"+
+		"\u00a3\3\2\2\2\20\u00b8\3\2\2\2\22\u00d1\3\2\2\2\24\u00d9\3\2\2\2\26\u00db"+
+		"\3\2\2\2\30\u00e2\3\2\2\2\32\u00ec\3\2\2\2\34\u00ee\3\2\2\2\36\u0101\3"+
+		"\2\2\2 \u0109\3\2\2\2\"\u0115\3\2\2\2$\u0125\3\2\2\2&\u0138\3\2\2\2()"+
+		"\5\4\3\2)\3\3\2\2\2*,\7\67\2\2+*\3\2\2\2,/\3\2\2\2-+\3\2\2\2-.\3\2\2\2"+
+		".\60\3\2\2\2/-\3\2\2\2\60\62\5\6\4\2\61-\3\2\2\2\62\65\3\2\2\2\63\61\3"+
+		"\2\2\2\63\64\3\2\2\2\649\3\2\2\2\65\63\3\2\2\2\668\7\67\2\2\67\66\3\2"+
+		"\2\28;\3\2\2\29\67\3\2\2\29:\3\2\2\2:\5\3\2\2\2;9\3\2\2\2<=\t\2\2\2=>"+
+		"\7.\2\2>@\7\61\2\2?A\5\b\5\2@?\3\2\2\2@A\3\2\2\2AB\3\2\2\2BC\7\62\2\2"+
+		"CM\5\f\7\2DE\7(\2\2EF\t\2\2\2FG\7.\2\2GI\7\61\2\2HJ\5\b\5\2IH\3\2\2\2"+
+		"IJ\3\2\2\2JK\3\2\2\2KM\7\62\2\2L<\3\2\2\2LD\3\2\2\2M\7\3\2\2\2NS\5\n\6"+
+		"\2OP\7\7\2\2PR\5\n\6\2QO\3\2\2\2RU\3\2\2\2SQ\3\2\2\2ST\3\2\2\2T\t\3\2"+
+		"\2\2US\3\2\2\2VW\t\3\2\2WX\7.\2\2X\13\3\2\2\2Y[\7\67\2\2ZY\3\2\2\2[^\3"+
+		"\2\2\2\\Z\3\2\2\2\\]\3\2\2\2]_\3\2\2\2^\\\3\2\2\2_r\7/\2\2`b\7\67\2\2"+
+		"a`\3\2\2\2be\3\2\2\2ca\3\2\2\2cd\3\2\2\2df\3\2\2\2ec\3\2\2\2fo\5\16\b"+
+		"\2gi\7\67\2\2hg\3\2\2\2ij\3\2\2\2jh\3\2\2\2jk\3\2\2\2kl\3\2\2\2ln\5\16"+
+		"\b\2mh\3\2\2\2nq\3\2\2\2om\3\2\2\2op\3\2\2\2ps\3\2\2\2qo\3\2\2\2rc\3\2"+
+		"\2\2rs\3\2\2\2sw\3\2\2\2tv\7\67\2\2ut\3\2\2\2vy\3\2\2\2wu\3\2\2\2wx\3"+
+		"\2\2\2xz\3\2\2\2yw\3\2\2\2z~\7\60\2\2{}\7\67\2\2|{\3\2\2\2}\u0080\3\2"+
+		"\2\2~|\3\2\2\2~\177\3\2\2\2\177\r\3\2\2\2\u0080~\3\2\2\2\u0081\u00a4\5"+
+		"\"\22\2\u0082\u00a4\5\34\17\2\u0083\u0084\7*\2\2\u0084\u0089\5\22\n\2"+
+		"\u0085\u0086\7\7\2\2\u0086\u0088\5\22\n\2\u0087\u0085\3\2\2\2\u0088\u008b"+
+		"\3\2\2\2\u0089\u0087\3\2\2\2\u0089\u008a\3\2\2\2\u008a\u00a4\3\2\2\2\u008b"+
 		"\u0089\3\2\2\2\u008c\u008d\7)\2\2\u008d\u0092\5\24\13\2\u008e\u008f\7"+
 		"\7\2\2\u008f\u0091\5\24\13\2\u0090\u008e\3\2\2\2\u0091\u0094\3\2\2\2\u0092"+
 		"\u0090\3\2\2\2\u0092\u0093\3\2\2\2\u0093\u00a4\3\2\2\2\u0094\u0092\3\2"+
@@ -2509,43 +2527,44 @@ public class jazzikParser extends Parser {
 		"\u00c7\6\t\6\3\u00c7\u00c8\t\t\2\2\u00c8\u00ca\5\20\t\2\u00c9\u00ba\3"+
 		"\2\2\2\u00c9\u00bd\3\2\2\2\u00c9\u00c0\3\2\2\2\u00c9\u00c3\3\2\2\2\u00c9"+
 		"\u00c6\3\2\2\2\u00ca\u00cd\3\2\2\2\u00cb\u00c9\3\2\2\2\u00cb\u00cc\3\2"+
-		"\2\2\u00cc\21\3\2\2\2\u00cd\u00cb\3\2\2\2\u00ce\u00d1\5\20\t\2\u00cf\u00d1"+
-		"\7\4\2\2\u00d0\u00ce\3\2\2\2\u00d0\u00cf\3\2\2\2\u00d1\23\3\2\2\2\u00d2"+
-		"\u00d3\7.\2\2\u00d3\u00d4\7\63\2\2\u00d4\u00d5\5\20\t\2\u00d5\u00d6\7"+
-		"\64\2\2\u00d6\u00d9\3\2\2\2\u00d7\u00d9\7.\2\2\u00d8\u00d2\3\2\2\2\u00d8"+
-		"\u00d7\3\2\2\2\u00d9\25\3\2\2\2\u00da\u00db\7.\2\2\u00db\u00dd\7\61\2"+
-		"\2\u00dc\u00de\5\30\r\2\u00dd\u00dc\3\2\2\2\u00dd\u00de\3\2\2\2\u00de"+
-		"\u00df\3\2\2\2\u00df\u00e0\7\62\2\2\u00e0\27\3\2\2\2\u00e1\u00e6\5\32"+
-		"\16\2\u00e2\u00e3\7\7\2\2\u00e3\u00e5\5\32\16\2\u00e4\u00e2\3\2\2\2\u00e5"+
-		"\u00e8\3\2\2\2\u00e6\u00e4\3\2\2\2\u00e6\u00e7\3\2\2\2\u00e7\31\3\2\2"+
-		"\2\u00e8\u00e6\3\2\2\2\u00e9\u00ec\7.\2\2\u00ea\u00ec\5\20\t\2\u00eb\u00e9"+
-		"\3\2\2\2\u00eb\u00ea\3\2\2\2\u00ec\33\3\2\2\2\u00ed\u00ee\t\n\2\2\u00ee"+
-		"\u00f3\5\36\20\2\u00ef\u00f0\7\7\2\2\u00f0\u00f2\5\36\20\2\u00f1\u00ef"+
-		"\3\2\2\2\u00f2\u00f5\3\2\2\2\u00f3\u00f1\3\2\2\2\u00f3\u00f4\3\2\2\2\u00f4"+
-		"\35\3\2\2\2\u00f5\u00f3\3\2\2\2\u00f6\u00f9\7.\2\2\u00f7\u00f8\7\6\2\2"+
-		"\u00f8\u00fa\5\20\t\2\u00f9\u00f7\3\2\2\2\u00f9\u00fa\3\2\2\2\u00fa\u0101"+
-		"\3\2\2\2\u00fb\u00fc\7.\2\2\u00fc\u00fd\7\63\2\2\u00fd\u00fe\5\20\t\2"+
-		"\u00fe\u00ff\7\64\2\2\u00ff\u0101\3\2\2\2\u0100\u00f6\3\2\2\2\u0100\u00fb"+
-		"\3\2\2\2\u0101\37\3\2\2\2\u0102\u0109\7.\2\2\u0103\u0104\7.\2\2\u0104"+
-		"\u0105\7\63\2\2\u0105\u0106\5\20\t\2\u0106\u0107\7\64\2\2\u0107\u0109"+
-		"\3\2\2\2\u0108\u0102\3\2\2\2\u0108\u0103\3\2\2\2\u0109!\3\2\2\2\u010a"+
-		"\u010b\7.\2\2\u010b\u010c\7\6\2\2\u010c\u0115\5\20\t\2\u010d\u010e\7."+
-		"\2\2\u010e\u010f\7\63\2\2\u010f\u0110\5\20\t\2\u0110\u0111\7\64\2\2\u0111"+
-		"\u0112\7\6\2\2\u0112\u0113\5\20\t\2\u0113\u0115\3\2\2\2\u0114\u010a\3"+
-		"\2\2\2\u0114\u010d\3\2\2\2\u0115#\3\2\2\2\u0116\u0117\7\"\2\2\u0117\u0118"+
-		"\5\20\t\2\u0118\u011b\5\f\7\2\u0119\u011a\7$\2\2\u011a\u011c\5\f\7\2\u011b"+
-		"\u0119\3\2\2\2\u011b\u011c\3\2\2\2\u011c\u0125\3\2\2\2\u011d\u011e\7#"+
-		"\2\2\u011e\u011f\5\20\t\2\u011f\u0122\5\f\7\2\u0120\u0121\7$\2\2\u0121"+
-		"\u0123\5\f\7\2\u0122\u0120\3\2\2\2\u0122\u0123\3\2\2\2\u0123\u0125\3\2"+
-		"\2\2\u0124\u0116\3\2\2\2\u0124\u011d\3\2\2\2\u0125%\3\2\2\2\u0126\u0127"+
-		"\7%\2\2\u0127\u0128\7.\2\2\u0128\u0129\7&\2\2\u0129\u012a\5\20\t\2\u012a"+
-		"\u012b\t\13\2\2\u012b\u012c\5\20\t\2\u012c\u012d\5\f\7\2\u012d\u0138\3"+
-		"\2\2\2\u012e\u012f\7%\2\2\u012f\u0130\7.\2\2\u0130\u0131\7&\2\2\u0131"+
-		"\u0132\7.\2\2\u0132\u0138\5\f\7\2\u0133\u0134\7\'\2\2\u0134\u0135\5\20"+
-		"\t\2\u0135\u0136\5\f\7\2\u0136\u0138\3\2\2\2\u0137\u0126\3\2\2\2\u0137"+
-		"\u012e\3\2\2\2\u0137\u0133\3\2\2\2\u0138\'\3\2\2\2&-\639@ILS\\cjorw~\u0089"+
-		"\u0092\u0099\u00a3\u00b3\u00b8\u00c9\u00cb\u00d0\u00d8\u00dd\u00e6\u00eb"+
-		"\u00f3\u00f9\u0100\u0108\u0114\u011b\u0122\u0124\u0137";
+		"\2\2\u00cc\21\3\2\2\2\u00cd\u00cb\3\2\2\2\u00ce\u00d2\7.\2\2\u00cf\u00d2"+
+		"\5\20\t\2\u00d0\u00d2\7\4\2\2\u00d1\u00ce\3\2\2\2\u00d1\u00cf\3\2\2\2"+
+		"\u00d1\u00d0\3\2\2\2\u00d2\23\3\2\2\2\u00d3\u00d4\7.\2\2\u00d4\u00d5\7"+
+		"\63\2\2\u00d5\u00d6\5\20\t\2\u00d6\u00d7\7\64\2\2\u00d7\u00da\3\2\2\2"+
+		"\u00d8\u00da\7.\2\2\u00d9\u00d3\3\2\2\2\u00d9\u00d8\3\2\2\2\u00da\25\3"+
+		"\2\2\2\u00db\u00dc\7.\2\2\u00dc\u00de\7\61\2\2\u00dd\u00df\5\30\r\2\u00de"+
+		"\u00dd\3\2\2\2\u00de\u00df\3\2\2\2\u00df\u00e0\3\2\2\2\u00e0\u00e1\7\62"+
+		"\2\2\u00e1\27\3\2\2\2\u00e2\u00e7\5\32\16\2\u00e3\u00e4\7\7\2\2\u00e4"+
+		"\u00e6\5\32\16\2\u00e5\u00e3\3\2\2\2\u00e6\u00e9\3\2\2\2\u00e7\u00e5\3"+
+		"\2\2\2\u00e7\u00e8\3\2\2\2\u00e8\31\3\2\2\2\u00e9\u00e7\3\2\2\2\u00ea"+
+		"\u00ed\7.\2\2\u00eb\u00ed\5\20\t\2\u00ec\u00ea\3\2\2\2\u00ec\u00eb\3\2"+
+		"\2\2\u00ed\33\3\2\2\2\u00ee\u00ef\t\n\2\2\u00ef\u00f4\5\36\20\2\u00f0"+
+		"\u00f1\7\7\2\2\u00f1\u00f3\5\36\20\2\u00f2\u00f0\3\2\2\2\u00f3\u00f6\3"+
+		"\2\2\2\u00f4\u00f2\3\2\2\2\u00f4\u00f5\3\2\2\2\u00f5\35\3\2\2\2\u00f6"+
+		"\u00f4\3\2\2\2\u00f7\u00fa\7.\2\2\u00f8\u00f9\7\6\2\2\u00f9\u00fb\5\20"+
+		"\t\2\u00fa\u00f8\3\2\2\2\u00fa\u00fb\3\2\2\2\u00fb\u0102\3\2\2\2\u00fc"+
+		"\u00fd\7.\2\2\u00fd\u00fe\7\63\2\2\u00fe\u00ff\5\20\t\2\u00ff\u0100\7"+
+		"\64\2\2\u0100\u0102\3\2\2\2\u0101\u00f7\3\2\2\2\u0101\u00fc\3\2\2\2\u0102"+
+		"\37\3\2\2\2\u0103\u010a\7.\2\2\u0104\u0105\7.\2\2\u0105\u0106\7\63\2\2"+
+		"\u0106\u0107\5\20\t\2\u0107\u0108\7\64\2\2\u0108\u010a\3\2\2\2\u0109\u0103"+
+		"\3\2\2\2\u0109\u0104\3\2\2\2\u010a!\3\2\2\2\u010b\u010c\7.\2\2\u010c\u010d"+
+		"\7\6\2\2\u010d\u0116\5\20\t\2\u010e\u010f\7.\2\2\u010f\u0110\7\63\2\2"+
+		"\u0110\u0111\5\20\t\2\u0111\u0112\7\64\2\2\u0112\u0113\7\6\2\2\u0113\u0114"+
+		"\5\20\t\2\u0114\u0116\3\2\2\2\u0115\u010b\3\2\2\2\u0115\u010e\3\2\2\2"+
+		"\u0116#\3\2\2\2\u0117\u0118\7\"\2\2\u0118\u0119\5\20\t\2\u0119\u011c\5"+
+		"\f\7\2\u011a\u011b\7$\2\2\u011b\u011d\5\f\7\2\u011c\u011a\3\2\2\2\u011c"+
+		"\u011d\3\2\2\2\u011d\u0126\3\2\2\2\u011e\u011f\7#\2\2\u011f\u0120\5\20"+
+		"\t\2\u0120\u0123\5\f\7\2\u0121\u0122\7$\2\2\u0122\u0124\5\f\7\2\u0123"+
+		"\u0121\3\2\2\2\u0123\u0124\3\2\2\2\u0124\u0126\3\2\2\2\u0125\u0117\3\2"+
+		"\2\2\u0125\u011e\3\2\2\2\u0126%\3\2\2\2\u0127\u0128\7%\2\2\u0128\u0129"+
+		"\7.\2\2\u0129\u012a\7&\2\2\u012a\u012b\5\20\t\2\u012b\u012c\t\13\2\2\u012c"+
+		"\u012d\5\20\t\2\u012d\u012e\5\f\7\2\u012e\u0139\3\2\2\2\u012f\u0130\7"+
+		"%\2\2\u0130\u0131\7.\2\2\u0131\u0132\7&\2\2\u0132\u0133\7.\2\2\u0133\u0139"+
+		"\5\f\7\2\u0134\u0135\7\'\2\2\u0135\u0136\5\20\t\2\u0136\u0137\5\f\7\2"+
+		"\u0137\u0139\3\2\2\2\u0138\u0127\3\2\2\2\u0138\u012f\3\2\2\2\u0138\u0134"+
+		"\3\2\2\2\u0139\'\3\2\2\2&-\639@ILS\\cjorw~\u0089\u0092\u0099\u00a3\u00b3"+
+		"\u00b8\u00c9\u00cb\u00d1\u00d9\u00de\u00e7\u00ec\u00f4\u00fa\u0101\u0109"+
+		"\u0115\u011c\u0123\u0125\u0138";
 	public static final ATN _ATN =
 		ATNSimulator.deserialize(_serializedATN.toCharArray());
 	static {

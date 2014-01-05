@@ -15,6 +15,10 @@ void write_str(char* s) {
 	printf("%s", s);
 }
 
+void write_arr(int* a) {
+	printf("%p", (void*)a);
+}
+
 void write_nl() {
 	printf("\n");
 }

@@ -67,7 +67,8 @@ expression:
     ;
 
 writearg:
-    expression                      # WriteInt
+    ID                              # WriteID
+    | expression                    # WriteInt
     | STRING                        # WriteStr
     ;
 
