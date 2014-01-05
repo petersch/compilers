@@ -4,7 +4,8 @@ jazzik
 Description
 -----------
 
-**Jazzik** (pronounced [d͡ʒɛziːk]) is an imperative structured programming language
+**Jazzik** (pronounced \[[d͡ʒɛziːk](http://en.wikipedia.org/wiki/International_Phonetic_Alphabet)\])
+is an imperative structured programming language
 with support for integers and integer arrays.
 It compiles to LLVM.
 
