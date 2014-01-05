@@ -21,6 +21,7 @@ public class CompilerVisitor extends jazzikBaseVisitor<CodeFragment> {
     
     public String errorStr = "";
     public boolean failed = false;
+    int errcount = 0;
     
     public CompilerVisitor(CommonTokenStream tokens) {
         this.tokens = tokens;
@@ -34,6 +35,7 @@ public class CompilerVisitor extends jazzikBaseVisitor<CodeFragment> {
     private void addError(ParserRuleContext ctx, String symbol, String message) {
         errorStr += "line " + getLine(ctx) + " at " + symbol + ": " + message + "\n";
         failed = true;
+        ++errcount;
     }
     
     private Stack<Map<String, VarEntry>> vars = new Stack<Map<String, VarEntry>>();
