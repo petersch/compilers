@@ -1,87 +1,132 @@
 grammar jazzik;
 
-init: (NEWLINE* funcdef)* ;
+@lexer::members {
+    public boolean failed = false;
+		public int errcount = 0;
+
+    @Override
+    public void recover(RecognitionException e) {
+        failed = true;
+				++errcount;
+				super.recover(e);
+	  }
+
+		@Override
+    public void recover(LexerNoViableAltException e) {
+        failed = true;
+				++errcount;
+				super.recover(e);
+		}
+}
+
+init: funcdecls;
+
+funcdecls: (NEWLINE* funcdecl)* NEWLINE*;
+     
+funcdecl:
+    type=('void'|'int') name=ID '(' args=funcargdecls? ')' block      # FuncDef
+    | 'extern' ('void'|'int') ID '(' funcargdecl? (',' funcargdecl)* ')' # FuncExtern
+    ;
+    
+block:
+    NEWLINE* '{' (NEWLINE* statement (NEWLINE+ statement)*)? NEWLINE* '}' NEWLINE*
+    ;
 
 statement: 
-    assignment                                         # AssignNope
-    | 'write' (expression|cond|STRING) (',' (expression|cond|STRING))*    # WriteInt
-    | 'read' varaccess (',' varaccess)*                # Read
-    | forstatement                                     # For
-    | ifstatement                                      # If
-    |                                                  # Nop
-    | 'return' expression                              # ReturnInt
-    | 'return' cond                                    # ReturnBool
-    | 'return'                                         # ReturnVoid
-    | 'break'                                          # Break
-    | 'continue'                                       # Continue
+    assignment                                         # Assign
+		| vardecl 																				 # VarDecl
+    | 'write' writearg (',' writearg)*                 # Write
+    | 'read' readarg (',' readarg)*                    # Read
+    | forstatement                                     # ForStm
+    | ifstatement                                      # IfStm
+    | 'return' expression?                             # ReturnInt
     | expression                                       # Expr
-    ;
-     
-assignment:
-    'int' (ID | ID '=' expression) (',' ID | ',' ID '=' expression)*  # IntVarDecl
-    | 'bool' (ID | ID '=' cond) (',' ID | ',' ID '=' cond)*  # BoolVarDecl
-    | 'int' ID '[' expression ']'                       # ArrayDecl
-    | lvalue '=' expression                            # AssignInt
-    | lvalue '=' cond                            # AssignBool
+		| funcdecl { notifyErrorListeners("nested functions are not allowed"); } # ErrorNested
     ;
 
-lvalue:
-    ID
-    | ID '[' expression ']'
+writearg:
+	expression 																# WriteInt
+	| STRING 																		# WriteStr
+	;
+
+readarg:
+	ID '[' expression ']' 									# ReadArray
+	| ID 																		# ReadInt
+	;
+
+vardecl:
+	'int' intvardecl (',' intvardecl)*
+	| 'bool' boolvardecl (',' boolvardecl)*
+	;
+intvardecl:
+  name=ID ('=' expression)? 					# IntDecl
+	| name=ID '[' expression ']' 					# ArrayDecl
+	;
+boolvardecl:
+	name=ID ('=' cond)? 					# BoolDecl
+	;
+
+assignment:
+    name=ID '=' expression                                    # AssignInt
+		| name=ID '[' index=expression ']' '=' value=expression   # AssignArray
     ;
 
 expression:
-    op=('+'|'++'|'-'|'--') expression                             # Una
+		op=('++'|'--') ID 																	# Inc
+    | op=('!'|'+'|'-') expression                           # Una
     | expression op=('/'|'*'|'%') expression            # Mul
     | expression op=('&'|'|'|'^') expression            # Bin
     | expression op=('+'|'-') expression                # Add
+    | expression op=('=='|'!='|'>'|'<'|'>='|'<=') expression   # Cmp
+    | expression op=('&&'|'||') expression    # Log
     | '(' expression ')'                                # Par
-    | ID '(' (expression (',' expression)*)? ')'        # FuncCall
+		| 'size' '(' ID ')' 																# Size
+    | ID '(' funcargs? ')'                              # FuncCall
     | INT                                               # IntConstant
-    | varaccess     																		# Vars
+    | varaccess     								                    # Vars
     ;
+
+funccall:
+	ID '(' funcargs? ')'
+	;
+funcargs:
+	funcarg (',' funcarg)*
+	;
+funcarg:
+	ID     										# FuncArgID
+	| expression              # FuncArgExpr
+	| cond   									# FuncArgCond
+	;
 
 varaccess:
     ID                                                  # VarAccess
     | ID '[' expression ']'                             # ArrayAccess   
     ;
-     
-funcdef:
-    ('void'|'int'|'bool') ID '(' funcargdef? (',' funcargdef)* ')' block
-    | 'extern' ('void'|'int'|'bool') ID '(' funcargdef? (',' funcargdef)* ')'
-    ;
 
-funcargdef:
-    ('int'|'int[]'|'bool') ID
+funcargdecls:
+		funcargdecl (',' funcargdecl)* 											# FuncArgDecls
+		;
+
+funcargdecl:
+    type=('int'|'int[]'|'bool') name=ID                   # FuncArgDecl
     ;
     
 ifstatement:
-    'if' cond block
-    | 'if' cond block 'else' block
-    | 'unless' cond block
-    | 'unless' cond block 'else' block
+    'if' expression block ('else' block)?     # If
+    | 'unless' expression block ('else' block)?     # Unless
     ;
     
 forstatement:
-    'for' ID 'in' range block
-    | 'while' cond block
-    ;
-    
-range:
-    expression rtype=('..'|'...') expression
+    'for' ID 'in' expression rtype=('..'|'...') expression block   # For
+    | 'while' expression block            # While
     ;
     
 cond:
     expression op=('=='|'!='|'>'|'<'|'>='|'<=') expression
-    | cond op=('=='|'!='|'&&'|'||') cond
     | '!' cond
     | '(' cond ')'
     | BOOL
     | ID
-    ;
-    
-block:
-    NEWLINE* '{' NEWLINE* statement (NEWLINE+ statement)* NEWLINE* '}' NEWLINE*
     ;
 
 //ID: [a-zA-Z][a-zA-Z0-9]*;
@@ -120,11 +165,12 @@ LT: '<';
 GTE: '>=';
 LTE: '<=';
 
-BOOL_TYPE: 'bool';
-INT_TYPE: 'int';
 ARRAY_TYPE: 'int[]';
+INT_TYPE: 'int';
+BOOL_TYPE: 'bool';
 VOID_TYPE: 'void';
 
+SIZE: 'size';
 IF: 'if';
 UNLESS: 'unless';
 ELSE: 'else';
