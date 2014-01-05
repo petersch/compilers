@@ -2,21 +2,21 @@ grammar jazzik;
 
 @lexer::members {
     public boolean failed = false;
-		public int errcount = 0;
+        public int errcount = 0;
 
     @Override
     public void recover(RecognitionException e) {
         failed = true;
-				++errcount;
-				super.recover(e);
-	  }
+                ++errcount;
+                super.recover(e);
+      }
 
-		@Override
+        @Override
     public void recover(LexerNoViableAltException e) {
         failed = true;
-				++errcount;
-				super.recover(e);
-		}
+                ++errcount;
+                super.recover(e);
+        }
 }
 
 init: funcdecls;
@@ -24,8 +24,14 @@ init: funcdecls;
 funcdecls: (NEWLINE* funcdecl)* NEWLINE*;
      
 funcdecl:
-    type=('void'|'int') name=ID '(' args=funcargdecls? ')' block      # FuncDef
-    | 'extern' type=('void'|'int') name=ID '(' args=funcargdecls? ')'     # FuncExtern
+    type=('void'|'int') name=ID '(' args=funcargdecls? ')' block            # FuncDef
+    | 'extern' type=('void'|'int') name=ID '(' args=funcargdecls? ')'       # FuncExtern
+    ;
+funcargdecls:
+    funcargdecl (',' funcargdecl)*                                  # FuncArgDecls
+    ;
+funcargdecl:
+    type=('int'|'int[]'|'bool') name=ID                             # FuncArgDecl
     ;
     
 block:
@@ -33,112 +39,86 @@ block:
     ;
 
 statement: 
-    assignment                                         # Assign
-		| vardecl 																				 # VarDecl
-    | 'write' writearg (',' writearg)*                 # Write
-    | 'read' readarg (',' readarg)*                    # Read
-    | forstatement                                     # ForStm
-    | ifstatement                                      # IfStm
-    | 'return' expression?                             # ReturnInt
-    | expression                                       # Expr
-		| 'break' { notifyErrorListeners("break statement is not supported"); } # ErrorBreak
-		| 'continue' { notifyErrorListeners("continue statement is not supported"); } # ContinueError
-		| funcdecl { notifyErrorListeners("nested functions are not allowed"); } # ErrorNested
-    ;
-
-writearg:
-	expression 																# WriteInt
-	| STRING 																		# WriteStr
-	;
-
-readarg:
-	ID '[' expression ']' 									# ReadArray
-	| ID 																		# ReadInt
-	;
-
-vardecl:
-	'int' intvardecl (',' intvardecl)*
-	| 'bool' boolvardecl (',' boolvardecl)*
-	;
-intvardecl:
-  name=ID ('=' expression)? 					# IntDecl
-	| name=ID '[' expression ']' 					# ArrayDecl
-	;
-boolvardecl:
-	name=ID ('=' cond)? 					# BoolDecl
-	;
-
-assignment:
-    name=ID '=' expression                                    # AssignInt
-		| name=ID '[' index=expression ']' '=' value=expression   # AssignArray
+    assignment                                                      # Assign
+    | vardecl                                                       # VarDecl
+    | 'write' writearg (',' writearg)*                              # Write
+    | 'read' readarg (',' readarg)*                                 # Read
+    | forstatement                                                  # ForStm
+    | ifstatement                                                   # IfStm
+    | 'return' expression?                                          # ReturnInt
+    | expression                                                    # Expr
+    | 'break' { notifyErrorListeners("break statement is not supported"); }         # ErrorBreak
+    | 'continue' { notifyErrorListeners("continue statement is not supported"); }   # ContinueError
+    | funcdecl { notifyErrorListeners("nested functions are not allowed"); }        # ErrorNested
     ;
 
 expression:
-		op=('++'|'--') ID 																	# Inc
-    | op=('!'|'+'|'-') expression                           # Una
-    | expression op=('/'|'*'|'%') expression            # Mul
-    | expression op=('&'|'|'|'^') expression            # Bin
-    | expression op=('+'|'-') expression                # Add
-    | expression op=('=='|'!='|'>'|'<'|'>='|'<=') expression   # Cmp
+    op=('!'|'+'|'-') expression                                     # Una
+    | expression op=('/'|'*'|'%') expression                        # Mul
+    | expression op=('&'|'|'|'^') expression                        # Bin
+    | expression op=('+'|'-') expression                            # Add
+    | expression op=('=='|'!='|'>'|'<'|'>='|'<=') expression        # Cmp
     | expression op=('&&'|'||') expression    # Log
-    | '(' expression ')'                                # Par
-		| 'size' '(' ID ')' 																# Size
-    | ID '(' funcargs? ')'                              # FuncCall
-    | INT                                               # IntConstant
-    | varaccess     								                    # Vars
+    | '(' expression ')'                                            # Par
+        | 'size' '(' ID ')'                                         # Size
+    | ID '(' funcargs? ')'                                          # FuncCall
+    | INT                                                           # IntConstant
+    | varaccess                                                     # Vars
+    ;
+
+writearg:
+    expression                      # WriteInt
+    | STRING                        # WriteStr
+    ;
+
+readarg:
+    ID '[' expression ']'           # ReadArray
+    | ID                            # ReadInt
     ;
 
 funccall:
-	ID '(' funcargs? ')'
-	;
+    ID '(' funcargs? ')'
+    ;
 funcargs:
-	funcarg (',' funcarg)*
-	;
+    funcarg (',' funcarg)*
+    ;
 funcarg:
-	ID     										# FuncArgID
-	| expression              # FuncArgExpr
-	| cond   									# FuncArgCond
-	;
-
-varaccess:
-    ID                                                  # VarAccess
-    | ID '[' expression ']'                             # ArrayAccess   
+    ID                              # FuncArgID
+    | expression                    # FuncArgExpr
     ;
 
-funcargdecls:
-		funcargdecl (',' funcargdecl)* 											# FuncArgDecls
-		;
+vardecl:
+    ('int'|'bool') intvardecl (',' intvardecl)*
+    ;
+intvardecl:
+    name=ID ('=' expression)?         # IntDecl
+    | name=ID '[' expression ']'    # ArrayDecl
+    ;
 
-funcargdecl:
-    type=('int'|'int[]'|'bool') name=ID                   # FuncArgDecl
+varaccess:
+    ID                              # VarAccess
+    | ID '[' expression ']'         # ArrayAccess   
+    ;
+
+assignment:
+    name=ID '=' expression                                          # AssignInt
+    | name=ID '[' index=expression ']' '=' value=expression         # AssignArray
     ;
     
 ifstatement:
-    'if' expression block ('else' block)?     # If
-    | 'unless' expression block ('else' block)?     # Unless
+    'if' expression block ('else' block)?                           # If
+    | 'unless' expression block ('else' block)?                     # Unless
     ;
     
 forstatement:
-    'for' ID 'in' expression rtype=('..'|'...') expression block   # For
-    | 'while' expression block            # While
+    'for' ID 'in' expression rtype=('..'|'...') expression block    # For
+    | 'for' ID 'in' ID block                                        # ForEach
+    | 'while' expression block                                      # While
     ;
-    
-cond:
-    expression op=('=='|'!='|'>'|'<'|'>='|'<=') expression
-    | '!' cond
-    | '(' cond ')'
-    | BOOL
-    | ID
-    ;
-
-//ID: [a-zA-Z][a-zA-Z0-9]*;
 
 INT: [0-9]+;
 STRING: '"' ~('\r'|'\n'|'"')* '"';
 BOOL: ('true'|'false');
-
-//TRUE: 'true';
-//FALSE: 'false';
 
 ASSIGN: '=';
 COMMA: ',';
