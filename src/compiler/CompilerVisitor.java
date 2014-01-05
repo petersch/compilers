@@ -556,6 +556,12 @@ public class CompilerVisitor extends jazzikBaseVisitor<CodeFragment> {
                 code.addCode(String.format("  %s = sub i32 0, %s\n", register, expr.getRegister()));
                 code.setRegister(register);
                 return code;
+            case jazzikParser.INEG:
+                code.addCode(expr);
+                register = generateNewRegister();
+                code.addCode(String.format("  %s = xor i32 -1, %s\n", register, expr.getRegister()));
+                code.setRegister(register);
+                return code;
             case jazzikParser.NEG:
                 code.addCode(expr);
                 register = generateNewRegister();

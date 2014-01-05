@@ -53,7 +53,7 @@ statement:
     ;
 
 expression:
-    op=('!'|'+'|'-') expression                                     # Una
+    op=('!'|'~'|'+'|'-') expression                                 # Una
     | expression op=('/'|'*'|'%') expression                        # Mul
     | expression op=('&'|'|'|'^') expression                        # Bin
     | expression op=('+'|'-') expression                            # Add
@@ -133,13 +133,6 @@ DIV: '/';
 ADD: '+';
 SUB: '-';
 MOD: '%';
-IAND: '&';
-IOR: '|';
-IXOR: '^';
-
-NEG: '!';
-AND: '&&';
-OR: '||';
 
 EQ: '==';
 NEQ: '!=';
@@ -147,6 +140,14 @@ GT: '>';
 LT: '<';
 GTE: '>=';
 LTE: '<=';
+
+NEG: '!';
+AND: '&&';
+IAND: '&';
+OR: '||';
+IOR: '|';
+IXOR: '^';
+INEG: '~';
 
 ARRAY_TYPE: 'int[]';
 INT_TYPE: 'int';
