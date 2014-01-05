@@ -797,6 +797,66 @@ public class CompilerVisitor extends jazzikBaseVisitor<CodeFragment> {
     }
     
     @Override
+    public CodeFragment visitForEach(jazzikParser.ForEachContext ctx) {
+        startScope();
+        
+        String register = registerVariable(jazzikParser.INT_TYPE, ctx.ID(0).getText());
+        VarEntry iter = getVariable(ctx, ctx.ID(0).getText());
+        VarEntry array = getVariable(ctx, ctx.ID(1).getText());
+        assertArrayType(ctx, array);
+        
+        CodeFragment body = visit(ctx.block());
+        
+        ST template = new ST(
+            "  br label %<init_label>\n" + 
+            "<init_label>:\n" + 
+            "  <iter> = alloca i32\n" +
+            "  <index> = alloca i32\n" +
+            "  store i32 1, i32*<index>\n" +
+            "  <length> = load i32* <array>\n" +
+            "  br label %<cmp_label>\n" + 
+            "<cmp_label>:\n" + 
+            "  <r1> = load i32* <index>\n" +
+            "  <cmp> = icmp sle i32 <r1>, <length>\n" + 
+            "  br i1 <cmp>, label %<body_label>, label %<end_label>\n" + 
+            "<body_label>:\n" + 
+            "  <ptr> = getelementptr i32* <array>, i32 <r1>\n" +
+            "  <r2> = load i32* <ptr>\n" +
+            "  store i32 <r2>, i32* <iter>\n" +
+            "<body_code>" + 
+            "  <r3> = load i32* <index>\n" +
+            "  <r4> = add i32 <r3>, 1\n" +
+            "  store i32 <r4>, i32* <index>\n" + 
+            "  br label %<cmp_label>\n" + 
+            "<end_label>:\n" + 
+            "  <ret> = add i32 0, 0\n"
+        );
+        
+        template.add("init_label", generateNewLabel());
+        template.add("cmp_label", generateNewLabel());
+        template.add("body_label", generateNewLabel());
+        template.add("end_label", generateNewLabel());
+        template.add("r1", generateNewRegister());
+        template.add("r2", generateNewRegister());
+        template.add("r3", generateNewRegister());
+        template.add("r4", generateNewRegister());
+        template.add("ret", generateNewRegister());
+        template.add("index", generateNewRegister());
+        template.add("length", generateNewRegister());
+        template.add("ptr", generateNewRegister());
+        template.add("cmp", generateNewRegister());
+        template.add("array", array.register);
+        template.add("iter", iter.register);
+        template.add("body_code", body.getCode());
+        
+        CodeFragment code = new CodeFragment();
+        code.addCode(template.render());
+        code.addGlobal(body);
+        endScope();
+        return code;
+    }
+    
+    @Override
     public CodeFragment visitWhile(jazzikParser.WhileContext ctx) {
         CodeFragment expr = visit(ctx.expression());
         CodeFragment body = visit(ctx.block());
