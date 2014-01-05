@@ -27,7 +27,3 @@ void seed() {
 	srand(time(NULL));
 }
 
-int rnd() {
-	return rand();
-}
-
