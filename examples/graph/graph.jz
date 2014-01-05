@@ -39,10 +39,10 @@ void main() {
     }
 
     if connected {
-        write "ANO"
+        write "YES"
     }
     else {
-        write "NIE"
+        write "NO"
     }
 }
 
