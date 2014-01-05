@@ -22,6 +22,7 @@ Usage
 -----
 
 lli binary must be installed
+
 1. `build.sh` builds parser
 2. `compile.sh input.jz output.ll` compiles program
 3. `run.sh output.ll` runs compiled code
