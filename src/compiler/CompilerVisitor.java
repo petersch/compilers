@@ -31,7 +31,11 @@ public class CompilerVisitor extends jazzikBaseVisitor<CodeFragment> {
     }
     
     private void addError(ParserRuleContext ctx, String symbol, String message) {
-        errorStr += "line " + getLine(ctx) + " at " + symbol.trim() + ": " + message + "\n";
+        symbol = symbol.replaceAll("\n", " ");
+        if (symbol.length() > 16) {
+            symbol = symbol.substring(0, 13) + "...";
+        }
+        errorStr += "line " + getLine(ctx) + " at '" + symbol.trim() + "': " + message + "\n";
         failed = true;
         ++errcount;
     }
@@ -157,6 +161,8 @@ public class CompilerVisitor extends jazzikBaseVisitor<CodeFragment> {
 
         CodeFragment code = new CodeFragment();
         code.addCode(template.render());
+        
+        getFunction(ctx, "main");
         return code;
     }
     

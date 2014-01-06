@@ -42,7 +42,7 @@ public class Compiler {
         }
         if (eval.failed) {
             System.err.print(eval.errorStr);
-            System.err.print(String.format("compiler failed with %d errors", eval.errcount));
+            System.err.println(String.format("compiler failed with %d errors", eval.errcount));
             Runtime.getRuntime().exit(-1);
         }
     }
