@@ -32,8 +32,8 @@ Rozdiely v špecifikácii
 -----------------------
 
 Jazyk podporuje iba jednorozmerné polia.
-Podporované typy sú `int` a `bool`, kompilujú sa ale na ten istý `i32` typ.`
-Nie sú podporované operátory `++, --, ?:`, ktoré v pôvodnej špecifikácii neboli,
+Podporované typy sú `int` a `bool`, kompilujú sa ale na ten istý `i32` typ.
+Nie sú podporované operátory `++`, `--`, `?:`, ktoré v pôvodnej špecifikácii neboli,
 ale objavili sa v príkladoch.
 
 Pribudol naopak foreach cyklus pre polia.
@@ -47,11 +47,11 @@ for x in arr {
 
 Scope premennej začína na mieste kde je deklarovaná a končí
 na konci bloku, v ktorom bola deklarovaná.
-Vo vnorených blokoch (`if, while, for, unless`) je možné deklarovať
+Vo vnorených blokoch (`if`, `while`, `for`, `unless`) je možné deklarovať
 premennú s rovnakým názvom, ktorá prekryje pôvodnú po koniec tohto bloku.
 
-Scope iteračnej premennej `for` cyklu je po koniec cyklu, dá sa prepisovať počas
-behu cyklu.
+Scope iteračnej premennej `for` cyklu je po koniec cyklu, dá sa prepisovať
+aj prekrývať počas behu cyklu.
 
 ```
 int i = 47
@@ -75,13 +75,12 @@ int main() {
 ```
 
 Tieto však musia používať iba podporované typy,
-teda `int`, 32-bit `bool`, `int*i` resp.`int[]`
+teda `int`, 32-bit `bool`, `int*` resp.`int[]`
 a vracať `int`, alebo `void`.
 
-
-Definované void funkcie sa kompilujú na int funkcie vracajúce 0,
-preto vrátiť hodnotu z void funkcie resp. priradiť ju nie je problém.
-
+Definované `void` funkcie sa kompilujú na int funkcie vracajúce 0,
+preto vrátiť hodnotu z `void` funkcie resp. priradiť ju nie je chyba.
+Neplatí to ale pre externé funkcie deklarované ako `void`.
 
 Pre fungovanie funkcie `size()` sú polia implementované tak, že prvý prvok poľa
 obsahuje jeho dĺžku, preto v externých funkciách treba indexovať od 1.
