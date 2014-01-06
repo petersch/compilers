@@ -57,7 +57,7 @@ aj prekrývať počas behu cyklu.
 int i = 47
 for i in 1..10 {
     int i = i
-		i = 9
+    i = 9
 }
 write i == 47
 ```
@@ -68,9 +68,9 @@ Je možné volať externé funkcie, po zadeklarovaní a prilinkovaní.
 extern void seed()
 extern int rand()
 int main() {
-	for i in 1..10 {
-		write rand()
-	}
+    for i in 1..10 {
+        write rand()
+    }
 }
 ```
 
