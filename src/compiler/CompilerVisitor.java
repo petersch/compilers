@@ -27,7 +27,6 @@ public class CompilerVisitor extends jazzikBaseVisitor<CodeFragment> {
     }
     
     private String getLine(ParserRuleContext ctx) {
-        //return tokens.get(ctx.getSourceInterval().a).getLine;
         return String.format("%d:%d", ctx.getStart().getLine(), ctx.getStart().getCharPositionInLine());
     }
     
@@ -71,14 +70,12 @@ public class CompilerVisitor extends jazzikBaseVisitor<CodeFragment> {
             ));
         }
         String register = generateNewRegister();
-        //variables.put(name, new VarEntry(type, name, register));
         vars.peek().put(name, new VarEntry(type, name, register));
         return register;
         
     }
     
     private VarEntry getVariable(ParserRuleContext ctx, String name) {
-        //return variables.get(name);
         for (int i = vars.size() - 1; i >= 0; --i) {
             if (vars.get(i).containsKey(name)) {
                 return vars.get(i).get(name);
@@ -89,7 +86,6 @@ public class CompilerVisitor extends jazzikBaseVisitor<CodeFragment> {
                 name
         ));
         return new VarEntry();
-        //throw new RuntimeException();
     }
     
     private void assertIntType(ParserRuleContext ctx, VarEntry var) {
@@ -129,7 +125,6 @@ public class CompilerVisitor extends jazzikBaseVisitor<CodeFragment> {
                 name
         ));
         return new FuncEntry();
-        //throw new RuntimeException();
     }
     
     @Override
@@ -138,7 +133,6 @@ public class CompilerVisitor extends jazzikBaseVisitor<CodeFragment> {
         if (nextResult == null) return aggregate;
         aggregate.addFragment(nextResult);
         aggregate.setRegister(nextResult.getRegister());
-        //System.out.println("AGGREGATING " + aggregate + " + " + nextResult);
         return aggregate;
     }
     
@@ -423,11 +417,16 @@ public class CompilerVisitor extends jazzikBaseVisitor<CodeFragment> {
     public CodeFragment visitIntConstant(jazzikParser.IntConstantContext ctx) {
         CodeFragment code = new CodeFragment();
         String register = generateNewRegister();
+        String value = "";
+        if (ctx.INT() != null) value = ctx.INT().getText();
+        if (ctx.TRUE() != null) value = "1";
+        if (ctx.FALSE() != null) value = "0";
+        
         ST template = new ST(
             "  <register> = add i32 <value>, 0\n"
         );
         template.add("register", register);
-        template.add("value", ctx.INT().getText());
+        template.add("value", value);
         code.setRegister(register);
         code.addCode(template.render());
         return code;

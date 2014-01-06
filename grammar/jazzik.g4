@@ -58,11 +58,11 @@ expression:
     | expression op=('&'|'|'|'^') expression                        # Bin
     | expression op=('+'|'-') expression                            # Add
     | expression op=('=='|'!='|'>'|'<'|'>='|'<=') expression        # Cmp
-    | expression op=('&&'|'||') expression    # Log
+    | expression op=('&&'|'||') expression                          # Log
     | '(' expression ')'                                            # Par
     | 'size' '(' ID ')'                                             # Size
     | ID '(' funcargs? ')'                                          # FuncCall
-    | INT                                                           # IntConstant
+    | (INT|TRUE|FALSE)                                              # IntConstant
     | varaccess                                                     # Vars
     ;
 
@@ -119,7 +119,8 @@ forstatement:
 
 INT: [0-9]+;
 STRING: '"' ~('\r'|'\n'|'"')* '"';
-BOOL: ('true'|'false');
+TRUE: 'true';
+FALSE: 'false';
 
 ASSIGN: '=';
 COMMA: ',';
