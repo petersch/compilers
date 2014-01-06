@@ -60,7 +60,7 @@ expression:
     | expression op=('=='|'!='|'>'|'<'|'>='|'<=') expression        # Cmp
     | expression op=('&&'|'||') expression    # Log
     | '(' expression ')'                                            # Par
-        | 'size' '(' ID ')'                                         # Size
+    | 'size' '(' ID ')'                                             # Size
     | ID '(' funcargs? ')'                                          # FuncCall
     | INT                                                           # IntConstant
     | varaccess                                                     # Vars
