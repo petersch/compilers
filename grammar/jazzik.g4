@@ -24,7 +24,7 @@ init: funcdecls;
 funcdecls: (NEWLINE* funcdecl)* NEWLINE*;
      
 funcdecl:
-    type=('void'|'int') name=ID '(' args=funcargdecls? ')' block            # FuncDef
+    type=('void'|'int'|'bool') name=ID '(' args=funcargdecls? ')' block     # FuncDef
     | 'extern' type=('void'|'int') name=ID '(' args=funcargdecls? ')'       # FuncExtern
     ;
 funcargdecls:
